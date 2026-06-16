@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09ec5a4399a342f486758a713ccd3d21, type: 3}
+  m_Name: Sniper
+  m_EditorClassIdentifier: Assembly-CSharp::SilahOzellikleriOS
+  silahTur: 2
+  atesHizi: 1
+  vurusHasari: 100
+  menzil: 500
+  sacilma: 0.01
+  sacmaSayisi: 1
+  recoilPower: 0.02
+  recoilTime: 0.04
+  yedekMermi: 10
+  mevcutMermi: 3
+  sarjorKapasitesi: 3
+  reloadSure: 2
+  siradakiAtisZamani: 0
+  mevcutSacilma: 0.01
+  upcharRotationSpeed: 2
+  downcharRotationSpeed: 10

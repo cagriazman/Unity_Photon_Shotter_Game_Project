@@ -1,0 +1,88 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Shadow\\Documents\\UnityProje\\FPShotter\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\users\\shadow\\documents\\unityproje\\fpshotter\\assets\\paket\\models\\weapon models\\animated ak-74m\\source\\silah.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\paket\\models\\weapon models\\animated ak-74m\\source\\silah.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\users\\shadow\\documents\\unityproje\\fpshotter\\assets\\paket\\resources\\oyuncugorunurluk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\paket\\resources\\oyuncugorunurluk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\users\\shadow\\documents\\unityproje\\fpshotter\\assets\\paket\\resources\\oyuncuic\u0131n.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\paket\\resources\\oyuncuic\u0131n.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\users\\shadow\\documents\\unityproje\\fpshotter\\assets\\paket\\resources\\oyuncusaglik.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\paket\\resources\\oyuncusaglik.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Silah.cs",
+              "DocumentMoniker": "C:\\Users\\Shadow\\Documents\\UnityProje\\FPShotter\\Assets\\Paket\\Models\\Weapon Models\\Animated AK-74M\\source\\Silah.cs",
+              "RelativeDocumentMoniker": "Assets\\Paket\\Models\\Weapon Models\\Animated AK-74M\\source\\Silah.cs",
+              "ToolTip": "C:\\Users\\Shadow\\Documents\\UnityProje\\FPShotter\\Assets\\Paket\\Models\\Weapon Models\\Animated AK-74M\\source\\Silah.cs",
+              "RelativeToolTip": "Assets\\Paket\\Models\\Weapon Models\\Animated AK-74M\\source\\Silah.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAA1wE8AAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-14T02:59:25.484Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "OyuncuSaglik.cs",
+              "DocumentMoniker": "C:\\Users\\Shadow\\Documents\\UnityProje\\FPShotter\\Assets\\Paket\\Resources\\OyuncuSaglik.cs",
+              "RelativeDocumentMoniker": "Assets\\Paket\\Resources\\OyuncuSaglik.cs",
+              "ToolTip": "C:\\Users\\Shadow\\Documents\\UnityProje\\FPShotter\\Assets\\Paket\\Resources\\OyuncuSaglik.cs",
+              "RelativeToolTip": "Assets\\Paket\\Resources\\OyuncuSaglik.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-14T02:57:22.042Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "OyuncuIc\u0131n.cs",
+              "DocumentMoniker": "C:\\Users\\Shadow\\Documents\\UnityProje\\FPShotter\\Assets\\Paket\\Resources\\OyuncuIc\u0131n.cs",
+              "RelativeDocumentMoniker": "Assets\\Paket\\Resources\\OyuncuIc\u0131n.cs",
+              "ToolTip": "C:\\Users\\Shadow\\Documents\\UnityProje\\FPShotter\\Assets\\Paket\\Resources\\OyuncuIc\u0131n.cs",
+              "RelativeToolTip": "Assets\\Paket\\Resources\\OyuncuIc\u0131n.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-14T02:55:02.67Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "OyuncuGorunurluk.cs",
+              "DocumentMoniker": "C:\\Users\\Shadow\\Documents\\UnityProje\\FPShotter\\Assets\\Paket\\Resources\\OyuncuGorunurluk.cs",
+              "RelativeDocumentMoniker": "Assets\\Paket\\Resources\\OyuncuGorunurluk.cs",
+              "ToolTip": "C:\\Users\\Shadow\\Documents\\UnityProje\\FPShotter\\Assets\\Paket\\Resources\\OyuncuGorunurluk.cs",
+              "RelativeToolTip": "Assets\\Paket\\Resources\\OyuncuGorunurluk.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-14T02:48:55.531Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
