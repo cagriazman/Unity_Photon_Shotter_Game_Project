@@ -7,7 +7,6 @@
 A high-paced, real-time multiplayer First-Person Shooter (FPS) game built with Unity and Photon Unity Networking (PUN). This project demonstrates advanced gameplay mechanics, networked player synchronization, and scalable code architecture.
 
 ## 🚀 Key Features
-<img width="502" height="203" alt="Animation" src="https://github.com/user-attachments/assets/3b8432e6-a7ab-42f1-9856-ee494cd930c6" />
 
 * **🌐 Real-Time Multiplayer:** Seamless player synchronization, voice chat, and lobby management using Photon PUN.
 * **🧠 AI State Machine:** Custom-built Artificial Intelligence utilizing a State Machine architecture (e.g., `AiChasePlayerState`) for realistic enemy behavior and combat mechanics.
