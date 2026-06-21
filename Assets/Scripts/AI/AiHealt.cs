@@ -30,6 +30,7 @@ public class AiHealt : HealtBase
                 ragdollController.getRagdolls(false);
                 weaponIK.enabled = false;
                 aiAgent.enabled = false;
+                aiAgent.navMeshAgent.isStopped = true;
                 StartCoroutine(DestroyEverything());
             }
         }
