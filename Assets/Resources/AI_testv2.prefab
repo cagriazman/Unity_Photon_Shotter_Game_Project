@@ -4589,6 +4589,10 @@ MonoBehaviour:
   isEnemyDead: 0
   patrolPoints: []
   pwId: 0
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 768
+  onOffGizmos: 0
   cacheId: 0
   _weapon: {fileID: 0}
   saldiriPaketi:
@@ -11082,7 +11086,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1459075297005786}
-  - component: {fileID: 2384306367700435413}
   m_Layer: 10
   m_Name: Raycast
   m_TagString: Untagged
@@ -11105,18 +11108,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6277601637065924210}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2384306367700435413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7378863063593424571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 646f2195cd977514ab2b6ea269cc609a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!1 &7414176018187646322
 GameObject:
   m_ObjectHideFlags: 0
@@ -12212,7 +12203,6 @@ MonoBehaviour:
   vurulabilirLayerlar:
     serializedVersion: 2
     m_Bits: 1527
-  pw: {fileID: 6007206670896212972}
   aimPos: {fileID: 1459075297005786}
 --- !u!54 &3920322689518979567
 Rigidbody:

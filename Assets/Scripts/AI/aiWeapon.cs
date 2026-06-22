@@ -2,7 +2,7 @@
 using UnityEngine;
 using Photon.Pun;
 
-public class aiWeapon : MonoBehaviourPun
+public class aiWeapon : MonoBehaviour
 {
     [Header("Sound")]
     public AudioClip[] shootSFX;
@@ -30,7 +30,6 @@ public class aiWeapon : MonoBehaviourPun
     public LayerMask vurulabilirLayerlar;
     
     private AiHealt aiHealt;
-    public PhotonView pw;
 
     public Transform aimPos;
     
@@ -38,7 +37,6 @@ public class aiWeapon : MonoBehaviourPun
      private void Start()
      {
          WeaponStruct = new weaponStruct(silahOzellikleriOS);
-         pw = GetComponentInParent<PhotonView>();
      }
 
      public void CallFire()

@@ -5,7 +5,6 @@ using UnityEngine;
 public class AiChasePlayerState : AiState
 {
     private float timer = 0;
-
     public AiStateId GetId()
     {
         return AiStateId.ChasePlayer;
@@ -13,7 +12,8 @@ public class AiChasePlayerState : AiState
 
     public void Enter(AiAgent agent)
     {
-        
+        agent.navMeshAgent.stoppingDistance=13f; 
+
     }
 
     public void Update(AiAgent agent)
@@ -27,10 +27,33 @@ public class AiChasePlayerState : AiState
 
                 agent.navMeshAgent.SetDestination(agent.playerTransform.position);
                 agent.animator.SetFloat("Ai_dikey_yon", agent.currentSpeed, 0.2f, Time.deltaTime);
+
+                float targetDistance = (agent.playerTransform.position - agent.transform.position).magnitude;
+                    
+                bool seeSmthn=IsCanSee.PerformRaycast
+                (
+                    agent._weapon.aimPos.position,
+                    agent._weapon.aimPos.forward,
+                    agent.detectionRadius/2,
+                    agent.enemyLayer
+                );
+                Color rayColor = seeSmthn ? Color.green : Color.red;
+                Debug.DrawRay(agent._weapon.aimPos.position, agent._weapon.aimPos.forward * agent.detectionRadius/2,rayColor, 2f);
                 
-                if (((agent.playerTransform.position-agent.transform.position).magnitude - agent.navMeshAgent.stoppingDistance)<0.01f&&currentAnimSpeedValue<=0.01f)
+                if ((targetDistance - agent.navMeshAgent.stoppingDistance)<0.01f&&currentAnimSpeedValue<=0.01f )
                 {
-                    agent.stateMachine.ChangeState(AiStateId.AttackPlayer);
+                    if (seeSmthn)
+                    {
+                        agent.stateMachine.ChangeState(AiStateId.AttackPlayer);
+                        
+                    }
+                    else
+                    {
+
+                        agent.navMeshAgent.stoppingDistance -= 1;
+
+
+                    }
                 }
             }
             else
@@ -48,7 +71,7 @@ public class AiChasePlayerState : AiState
             agent.stateMachine.ChangeState(AiStateId.SearchPlayer);
         }
     }
-    
+   
 
     public void Exit(AiAgent agent)
     {

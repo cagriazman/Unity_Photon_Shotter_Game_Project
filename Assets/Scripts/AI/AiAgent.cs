@@ -16,7 +16,9 @@ public class AiAgent : MonoBehaviourPun
     public Vector3[] patrolPoints;
 
     public int pwId;
-    
+    public LayerMask enemyLayer;
+
+    public bool onOffGizmos;
     
     [FormerlySerializedAs("pwId")] public int cacheId;
     public aiWeapon _weapon;
@@ -102,15 +104,18 @@ public class AiAgent : MonoBehaviourPun
     }
     private void OnDrawGizmos()
     {
+        while(onOffGizmos)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position,detectionRadius);
 
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position,detectionRadius);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, navMeshAgent.stoppingDistance);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, navMeshAgent.stoppingDistance);
+            
+        }
         
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.up * 2f);
+        // Gizmos.color = Color.blue;
+        // Gizmos.DrawLine(transform.position, transform.position + Vector3.up * 2f);
     }
 }
 
