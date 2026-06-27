@@ -14,7 +14,8 @@ public class AiAgent : MonoBehaviourPun
     public float detectionRadius = 10.0f;
     public bool isEnemyDead;
     public Vector3[] patrolPoints;
-
+    public bool seeSmthn;
+    
     public int pwId;
     public LayerMask enemyLayer;
 
@@ -59,10 +60,36 @@ public class AiAgent : MonoBehaviourPun
     
     void Update()
     {
-        stateMachine.Update();
-        Debug.Log(stateMachine.currentState);
+         seeSmthn=PerformRaycast
+        (
+            _weapon.aimPos.position,
+            _weapon.aimPos.forward,
+            detectionRadius/2,
+            enemyLayer
+        );
+        // inForntOfMe = VisionUtils.PerformConeScan(
+        //     _weapon.aimPos.position,     
+        //     _weapon.aimPos.forward,      
+        //     detectionRadius,             
+        //     60f,                               
+        //     enemyLayer,                  
+        //     LayerMask.GetMask("Default")       // Duvar/Engel katmanı
+        // );
 
         
+        
+        stateMachine.Update();
+        Debug.Log(stateMachine.currentState);
+    }
+    
+    public bool PerformRaycast(Vector3 origin, Vector3 direction, float distance, LayerMask targetMask)
+    {
+        Color rayColor = seeSmthn ? Color.green : Color.red;
+        Debug.DrawRay(origin,
+            direction *distance,
+            rayColor,
+            .005f);
+        return Physics.Raycast(origin, direction, distance, targetMask);
     }
     public void changeId(int newId)
     {
@@ -87,9 +114,6 @@ public class AiAgent : MonoBehaviourPun
 
     }
 
-    
-
-
     void GorseliUygula(int takimNo)
     {
         if (meshRenderer == null) return;
@@ -104,15 +128,17 @@ public class AiAgent : MonoBehaviourPun
     }
     private void OnDrawGizmos()
     {
-        while(onOffGizmos)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(transform.position,detectionRadius);
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, navMeshAgent.stoppingDistance);
+        //alan testleri
+            // Gizmos.color = Color.green;
+            // Gizmos.DrawWireSphere(transform.position,detectionRadius);
+            //
+            // Gizmos.color = Color.red;
+            // Gizmos.DrawWireSphere(transform.position, navMeshAgent.stoppingDistance);
+            //
+            // Gizmos.color = Color.blue;
+            // Gizmos.DrawWireSphere(transform.position, 12f);
             
-        }
+        
         
         // Gizmos.color = Color.blue;
         // Gizmos.DrawLine(transform.position, transform.position + Vector3.up * 2f);

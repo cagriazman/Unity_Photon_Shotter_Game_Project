@@ -4588,6 +4588,7 @@ MonoBehaviour:
   detectionRadius: 30
   isEnemyDead: 0
   patrolPoints: []
+  seeSmthn: 0
   pwId: 0
   enemyLayer:
     serializedVersion: 2
@@ -4657,7 +4658,7 @@ MonoBehaviour:
   aim: {fileID: 1459075297005786}
   bone: {fileID: 4549178881009972532}
   maxAngle: 30
-  maxDistance: 1
+  minDistance: 1
   charRotationSpeed: 5
   _zamanlayici: 0
   _referansOrigin: 0

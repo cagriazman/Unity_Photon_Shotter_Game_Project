@@ -9,7 +9,7 @@ public class WeaponIK : MonoBehaviour
     public Transform aim;
     public Transform bone;
     public float maxAngle=30.0f;
-    public float maxDistance=1.0f;
+    public float minDistance=1.0f;
     public float charRotationSpeed = 2.5f;
     [Header("Dönüş Hesaplama Elemanları")]
     [SerializeField]private float _zamanlayici = 0f;
@@ -73,9 +73,9 @@ public class WeaponIK : MonoBehaviour
             agent.animator.SetFloat("Ai_fareIcinYtyYn", value);
         }
 
-        if (targetDistance < maxDistance)
+        if (targetDistance < minDistance)
         {
-            targetBlendOut += maxDistance-targetDistance;
+            targetBlendOut += minDistance-targetDistance;
             
         }
         
@@ -89,11 +89,8 @@ public class WeaponIK : MonoBehaviour
     void LateUpdate()
     {           
         target = agent.playerTransform;
-        if (target == null) return;
-
-        Vector3 targetDir = GetAimPosition();
-        AimToTarget(bone,targetDir);
-        
+        if (target != null)        AimToTarget(bone,GetAimPosition());
+        else AimToTarget(bone,transform.forward);
     }
 
     private void AimToTarget(Transform bone1, Vector3 targetDir)
@@ -102,4 +99,5 @@ public class WeaponIK : MonoBehaviour
         Quaternion aimTowards = Quaternion.FromToRotation(aimDirection,targetDir);
         bone1.rotation= aimTowards *  bone1.rotation;
     }
+    
 }

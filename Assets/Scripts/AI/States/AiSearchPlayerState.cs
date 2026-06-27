@@ -16,12 +16,12 @@ public class AiSearchPlayerState : AiState
         public void Update(AiAgent agent)
         {
             int index = agent.pwId % 4;
+            if(agent.playerTransform != null)agent.stateMachine.ChangeState(AiStateId.ChasePlayer);
 
             agent.currentSpeed = agent.navMeshAgent.velocity.magnitude;
-            agent.navMeshAgent.SetDestination(agent.patrolPoints[index]);
+            agent.navMeshAgent.SetDestination(agent.patrolPoints[3]);
             agent.animator.SetFloat("Ai_dikey_yon", agent.currentSpeed, 0.2f, Time.deltaTime);
             
-            if(agent.playerTransform != null)agent.stateMachine.ChangeState(AiStateId.ChasePlayer);
             if(!PhotonNetwork.IsMasterClient)return;
             if (agent.playerTransform == null)
             {

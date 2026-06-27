@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem.Android;
 
 public class AiAttackPlayerState : AiState
 { 
@@ -15,24 +16,12 @@ public class AiAttackPlayerState : AiState
 
     public void Update(AiAgent agent)
     {
-        bool seeSmthn=IsCanSee.PerformRaycast
-        (
-            agent._weapon.aimPos.position,
-            agent._weapon.aimPos.forward,
-            agent.detectionRadius/2,
-            agent.enemyLayer
-        );
+        
         if (agent.playerTransform!=null
             &&(agent.playerTransform.position-agent.transform.position).magnitude <= agent.navMeshAgent.stoppingDistance
-            &&seeSmthn)
+            &&agent.seeSmthn)
         {
-            AiHealt enemyHealt = agent.playerTransform.GetComponentInParent<AiHealt>();
-            agent._weapon.CallFire();
-
-            if (enemyHealt != null && enemyHealt.isDead)
-            {
-                agent.playerTransform = null;
-            }
+            
         }
         else
         {

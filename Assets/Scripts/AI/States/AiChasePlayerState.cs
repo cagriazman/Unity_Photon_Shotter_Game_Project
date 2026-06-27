@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AiChasePlayerState : AiState
 {
-    private float timer = 0;
+    bool lockedIn = true;
     public AiStateId GetId()
     {
         return AiStateId.ChasePlayer;
@@ -13,7 +13,8 @@ public class AiChasePlayerState : AiState
     public void Enter(AiAgent agent)
     {
         agent.navMeshAgent.stoppingDistance=13f; 
-
+        lockedIn = true;
+        
     }
 
     public void Update(AiAgent agent)
@@ -21,40 +22,77 @@ public class AiChasePlayerState : AiState
         float currentAnimSpeedValue=agent.animator.GetFloat("Ai_dikey_yon");
         if (agent.playerTransform != null)
         {
+            ///////////////////////////////////////////////////////////////////////////
             if (agent.transform.IsTargetInRange(agent.playerTransform, agent.detectionRadius))
             {
+                UnityEngine.AI.NavMeshPath currentPath = agent.navMeshAgent.path;
+                if (currentPath.corners.Length > 1)
+                {
+                    for (int i = 0; i < currentPath.corners.Length - 1; i++)
+                    {
+                        Debug.DrawLine(currentPath.corners[i], currentPath.corners[i + 1], Color.black, 0.1f);
+                        Debug.DrawRay(currentPath.corners[i], Vector3.up * 0.5f, Color.yellow, 0.1f);
+                    }
+                }
+                ///////////////////////////////////////////////////////////////////////////
+                
+                
                 agent.currentSpeed = agent.navMeshAgent.velocity.magnitude;
 
-                agent.navMeshAgent.SetDestination(agent.playerTransform.position);
+                if(lockedIn)agent.navMeshAgent.SetDestination(agent.playerTransform.position);
                 agent.animator.SetFloat("Ai_dikey_yon", agent.currentSpeed, 0.2f, Time.deltaTime);
 
                 float targetDistance = (agent.playerTransform.position - agent.transform.position).magnitude;
                     
-                bool seeSmthn=IsCanSee.PerformRaycast
-                (
-                    agent._weapon.aimPos.position,
-                    agent._weapon.aimPos.forward,
-                    agent.detectionRadius/2,
-                    agent.enemyLayer
-                );
-                Color rayColor = seeSmthn ? Color.green : Color.red;
-                Debug.DrawRay(agent._weapon.aimPos.position, agent._weapon.aimPos.forward * agent.detectionRadius/2,rayColor, 2f);
                 
-                if ((targetDistance - agent.navMeshAgent.stoppingDistance)<0.01f&&currentAnimSpeedValue<=0.01f )
+                 
+                
+                if ((targetDistance - agent.navMeshAgent.stoppingDistance)<0.01f )
                 {
-                    if (seeSmthn)
+                    if (agent.seeSmthn)
                     {
-                        agent.stateMachine.ChangeState(AiStateId.AttackPlayer);
-                        
+                        agent.navMeshAgent.ResetPath();
+                        AiHealt enemyHealt = agent.playerTransform.GetComponentInParent<AiHealt>();
+                        agent._weapon.CallFire();
+
+                        if (enemyHealt != null && enemyHealt.isDead)
+                        {
+                            agent.playerTransform = null;
+                        }
                     }
+
                     else
                     {
+                        lockedIn = false;
 
-                        agent.navMeshAgent.stoppingDistance -= 1;
+                            Vector3 dirToAi = (agent.playerTransform.position - agent.transform.position).normalized;
+                            // float signedAngle = Vector3.SignedAngle(agent.transform.forward, dirToAi, Vector3.up);
+                            // float leftOrRight = Mathf.Sign(signedAngle);
+                            //float flankAngle = leftOrRight * 60f; 
+                            //Vector3 rotatedDir = Quaternion.Euler(0, flankAngle, 0) * dirToAi;
+                            
+                            
+                            Vector3 newFlankPosition = ( dirToAi * 8f);
 
-
+                            agent.navMeshAgent.SetDestination(agent.playerTransform.position + newFlankPosition);
+                            
+                            
+                            
+                            // Debug.DrawLine(agent.transform.position, agent.transform.position+dirToAi, Color.blue, 10);
+                            // Debug.DrawLine(agent.transform.position, agent.transform.position+rotatedDir, Color.yellow, 0.1f);
+                            // Debug.DrawLine(agent.transform.position, agent.transform.position+newFlankPosition, Color.white, 0.1f);
+    
+                            Debug.Log("Seni duvardan göremiyorum, sağına doğru açılıyorum!");
+                        
+                        
                     }
                 }
+                else
+                {
+                    lockedIn = true;
+                    
+                }
+               
             }
             else
             {
@@ -71,6 +109,7 @@ public class AiChasePlayerState : AiState
             agent.stateMachine.ChangeState(AiStateId.SearchPlayer);
         }
     }
+    
    
 
     public void Exit(AiAgent agent)
