@@ -3172,7 +3172,7 @@ GameObject:
   m_Layer: 8
   m_Name: Target
   m_TagString: Untagged
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -4502,6 +4502,8 @@ GameObject:
   - component: {fileID: 1739200899348281880}
   - component: {fileID: 3122690910738932882}
   - component: {fileID: 2509245848431931125}
+  - component: {fileID: -7551801684268110178}
+  - component: {fileID: 141429535837158926}
   m_Layer: 8
   m_Name: AI_testv2
   m_TagString: Ai
@@ -4583,19 +4585,19 @@ MonoBehaviour:
   currentSpeed: 0
   initialState: 1
   playerTransform: {fileID: 0}
-  navMeshAgent: {fileID: 1739200899348281880}
   animator: {fileID: 5049046390772946571}
-  detectionRadius: 30
+  detectionRadius: 20
   isEnemyDead: 0
   patrolPoints: []
   seeSmthn: 0
   pwId: 0
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 512
   onOffGizmos: 0
   cacheId: 0
   _weapon: {fileID: 0}
+  navMeshAgent: {fileID: 1739200899348281880}
   saldiriPaketi:
   - {fileID: 2100000, guid: b9a8cab862c17cb42bedbe1846ab4b7c, type: 2}
   - {fileID: 2100000, guid: 3ffb9cc0bde6f9a41afaa7351f00cb6a, type: 2}
@@ -4665,7 +4667,7 @@ MonoBehaviour:
   HorizontalForMouse: 0
   angleCounter: 0
   agent: {fileID: 0}
-  additionalOffset: {x: 0, y: 0.95, z: 0}
+  additionalOffset: {x: 0, y: 1.2, z: 0}
 --- !u!114 &2509245848431931125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4681,6 +4683,44 @@ MonoBehaviour:
   rigidbodies: []
   animator: {fileID: 0}
   meshSocket: {fileID: 6277601637065924210}
+--- !u!114 &-7551801684268110178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3170743336860574326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371e99284f1ef7843ad801c2df66e571, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  distance: 20
+  angle: 30
+  height: 1.8
+  segments: 10
+  meshColor: {r: 1, g: 0, b: 0, a: 0.53333336}
+  scanFrequency: 30
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  occlusionLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  Objects: []
+--- !u!114 &141429535837158926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3170743336860574326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192824c0e54dc344a9ebfa1b8f1275e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AiTargetingSystem
+  timeSpan: 3
 --- !u!1 &3196444932049891544
 GameObject:
   m_ObjectHideFlags: 0

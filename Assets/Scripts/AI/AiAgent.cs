@@ -9,26 +9,34 @@ public class AiAgent : MonoBehaviourPun
     public AiStateMachine stateMachine;
     public AiStateId initialState;
     public Transform playerTransform ;
-    public NavMeshAgent navMeshAgent;
     public Animator animator;
     public float detectionRadius = 10.0f;
     public bool isEnemyDead;
     public Vector3[] patrolPoints;
     public bool seeSmthn;
     
+    
     public int pwId;
     public LayerMask enemyLayer;
 
     public bool onOffGizmos;
+    public int cacheId;
     
-    [FormerlySerializedAs("pwId")] public int cacheId;
+    
+    [Header("Agent Components")]
     public aiWeapon _weapon;
+    public NavMeshAgent navMeshAgent; 
+    public AiSensor AiSensor { get; private set; }
+    public AiTargetingSystem aiTargetingSystem {  get; private set; }
+
     
     [Header("Takım Materyal Paketleri")] public Material[] saldiriPaketi;  
     public Material[] savunmaPaketi;
-   public SkinnedMeshRenderer meshRenderer;
+    public SkinnedMeshRenderer meshRenderer;
     public GameObject tpOyuncuGorunum;
     public int teamNumber =-1;
+    
+    
 
     void Start()
     {
@@ -44,7 +52,8 @@ public class AiAgent : MonoBehaviourPun
         
         object[] toRegards = photonView.InstantiationData;
         _weapon = GetComponentInChildren<aiWeapon>();
-
+        AiSensor = GetComponent<AiSensor>();
+        aiTargetingSystem = GetComponent<AiTargetingSystem>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         stateMachine = new AiStateMachine(this);
         stateMachine.RegisterState(new AiChasePlayerState());
@@ -60,28 +69,23 @@ public class AiAgent : MonoBehaviourPun
     
     void Update()
     {
-         seeSmthn=PerformRaycast
+        seeSmthn=PerformRaycast
         (
             _weapon.aimPos.position,
             _weapon.aimPos.forward,
-            detectionRadius/2,
+            detectionRadius*0.85f,
             enemyLayer
         );
-        // inForntOfMe = VisionUtils.PerformConeScan(
-        //     _weapon.aimPos.position,     
-        //     _weapon.aimPos.forward,      
-        //     detectionRadius,             
-        //     60f,                               
-        //     enemyLayer,                  
-        //     LayerMask.GetMask("Default")       // Duvar/Engel katmanı
-        // );
+        
 
         
         
         stateMachine.Update();
         Debug.Log(stateMachine.currentState);
     }
-    
+
+   
+
     public bool PerformRaycast(Vector3 origin, Vector3 direction, float distance, LayerMask targetMask)
     {
         Color rayColor = seeSmthn ? Color.green : Color.red;

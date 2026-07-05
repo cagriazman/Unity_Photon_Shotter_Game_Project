@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AiChasePlayerState : AiState
 {
+    private float counter = 1;
     bool lockedIn = true;
     public AiStateId GetId()
     {
@@ -22,7 +23,7 @@ public class AiChasePlayerState : AiState
         float currentAnimSpeedValue=agent.animator.GetFloat("Ai_dikey_yon");
         if (agent.playerTransform != null)
         {
-            ///////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////NavMeshAgent Path Visual
             if (agent.transform.IsTargetInRange(agent.playerTransform, agent.detectionRadius))
             {
                 UnityEngine.AI.NavMeshPath currentPath = agent.navMeshAgent.path;
@@ -52,9 +53,10 @@ public class AiChasePlayerState : AiState
                     if (agent.seeSmthn)
                     {
                         agent.navMeshAgent.ResetPath();
+                        counter = 1f;
                         AiHealt enemyHealt = agent.playerTransform.GetComponentInParent<AiHealt>();
-                        agent._weapon.CallFire();
-
+                        
+                        //agent._weapon.CallFire();
                         if (enemyHealt != null && enemyHealt.isDead)
                         {
                             agent.playerTransform = null;
@@ -63,7 +65,8 @@ public class AiChasePlayerState : AiState
 
                     else
                     {
-                        lockedIn = false;
+                            lockedIn = false;
+                            counter += Time.deltaTime;
 
                             Vector3 dirToAi = (agent.playerTransform.position - agent.transform.position).normalized;
                             // float signedAngle = Vector3.SignedAngle(agent.transform.forward, dirToAi, Vector3.up);
@@ -72,9 +75,9 @@ public class AiChasePlayerState : AiState
                             //Vector3 rotatedDir = Quaternion.Euler(0, flankAngle, 0) * dirToAi;
                             
                             
-                            Vector3 newFlankPosition = ( dirToAi * 8f);
+                            Vector3 newFlankPosition = ( dirToAi * (8f+counter));
 
-                            agent.navMeshAgent.SetDestination(agent.playerTransform.position + newFlankPosition);
+                            //agent.navMeshAgent.SetDestination(agent.playerTransform.position + newFlankPosition);
                             
                             
                             
@@ -82,7 +85,7 @@ public class AiChasePlayerState : AiState
                             // Debug.DrawLine(agent.transform.position, agent.transform.position+rotatedDir, Color.yellow, 0.1f);
                             // Debug.DrawLine(agent.transform.position, agent.transform.position+newFlankPosition, Color.white, 0.1f);
     
-                            Debug.Log("Seni duvardan göremiyorum, sağına doğru açılıyorum!");
+                            Debug.Log("Bot cant SEE!!");
                         
                         
                     }
