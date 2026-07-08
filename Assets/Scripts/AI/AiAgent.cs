@@ -26,7 +26,7 @@ public class AiAgent : MonoBehaviourPun
     [Header("Agent Components")]
     public aiWeapon _weapon;
     public NavMeshAgent navMeshAgent; 
-    public AiSensor AiSensor { get; private set; }
+    public AiSensor Sensor { get; private set; }
     public AiTargetingSystem aiTargetingSystem {  get; private set; }
 
     
@@ -52,7 +52,7 @@ public class AiAgent : MonoBehaviourPun
         
         object[] toRegards = photonView.InstantiationData;
         _weapon = GetComponentInChildren<aiWeapon>();
-        AiSensor = GetComponent<AiSensor>();
+        Sensor = GetComponent<AiSensor>();
         aiTargetingSystem = GetComponent<AiTargetingSystem>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         stateMachine = new AiStateMachine(this);
@@ -69,13 +69,13 @@ public class AiAgent : MonoBehaviourPun
     
     void Update()
     {
-        seeSmthn=PerformRaycast
-        (
-            _weapon.aimPos.position,
-            _weapon.aimPos.forward,
-            detectionRadius*0.85f,
-            enemyLayer
-        );
+        // seeSmthn=PerformRaycast
+        // (
+        //     _weapon.aimPos.position,
+        //     _weapon.aimPos.forward,
+        //     detectionRadius*0.85f,
+        //     enemyLayer
+        // );
         
 
         
@@ -86,15 +86,15 @@ public class AiAgent : MonoBehaviourPun
 
    
 
-    public bool PerformRaycast(Vector3 origin, Vector3 direction, float distance, LayerMask targetMask)
-    {
-        Color rayColor = seeSmthn ? Color.green : Color.red;
-        Debug.DrawRay(origin,
-            direction *distance,
-            rayColor,
-            .005f);
-        return Physics.Raycast(origin, direction, distance, targetMask);
-    }
+    // public bool PerformRaycast(Vector3 origin, Vector3 direction, float distance, LayerMask targetMask)
+    // {
+    //     Color rayColor = seeSmthn ? Color.green : Color.red;
+    //     Debug.DrawRay(origin,
+    //         direction *distance,
+    //         rayColor,
+    //         .005f);
+    //     return Physics.Raycast(origin, direction, distance, targetMask);
+    // }
     public void changeId(int newId)
     {
         if (cacheId != newId)

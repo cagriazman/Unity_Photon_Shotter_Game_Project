@@ -7,7 +7,7 @@ public class AiTargetingSystem : MonoBehaviour
     AiSensoryMemory MemorySystem = new AiSensoryMemory();
     AiSensor sensor;
     private AiMemory BestMemory;
-    [SerializeField]private float timeSpan = 3f;
+    [SerializeField]private float timeSpan = 0.5f;
 
     public bool HasTarget => BestMemory != null; 
     public float TargetDistance => BestMemory.distance;

@@ -3,7 +3,7 @@ using Photon.Pun;
 using UnityEngine;
 public class AiSearchPlayerState : AiState
 {
-    public AiStateId GetId()
+        public AiStateId GetId()
         {
             return AiStateId.SearchPlayer;
         }
@@ -23,27 +23,32 @@ public class AiSearchPlayerState : AiState
             agent.animator.SetFloat("Ai_dikey_yon", agent.currentSpeed, 0.2f, Time.deltaTime);
             
             if(!PhotonNetwork.IsMasterClient)return;
-            if (agent.playerTransform == null)
+            if (agent.playerTransform == null && agent.Sensor.colliders != null && agent.Sensor.colliders.Length > 0)
             {
-                GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
-                GameObject[] botObjects = GameObject.FindGameObjectsWithTag("Ai");
-                GameObject[] lastObjects = playerObjects.Concat(botObjects).ToArray();
+
                 
-                foreach (GameObject playerObj in lastObjects)
-                {                       
+                for (int i = 0; i < agent.Sensor.colliders.Length; i++)
+                { 
+                    if (agent.Sensor.colliders[i] == null) 
+                    {
+                        continue; 
+                    }
+                    GameObject playerObj = agent.Sensor.colliders[i].gameObject;
+                    
+                    
                     OyuncuIcın player = playerObj.GetComponentInParent<OyuncuIcın>();
                     AiAgent bot = playerObj.GetComponentInParent<AiAgent>();
                     AiHealt botHealt = playerObj.GetComponentInParent<AiHealt>();
 
-                    int hedefTakimNumarasi = -1; 
+                    int TempTeamNumber = -1; 
 
                     if (player != null)
                     {
-                        hedefTakimNumarasi = player.teamNumber;
+                        TempTeamNumber = player.teamNumber;
                     }
                     else if (bot != null)
                     {
-                        hedefTakimNumarasi = bot.teamNumber;
+                        TempTeamNumber = bot.teamNumber;
                         if (botHealt.isDead)
                         {
                             continue;
@@ -53,14 +58,13 @@ public class AiSearchPlayerState : AiState
                     {
                         continue; 
                     }
-                    if (agent.teamNumber == hedefTakimNumarasi || hedefTakimNumarasi == -1)
+                    if (agent.teamNumber == TempTeamNumber || TempTeamNumber == -1)
                     {
                         continue;
                     }
                     
-                    if (agent.transform.IsTargetInRange(playerObj.transform, agent.detectionRadius))
-                    {
-                        PhotonView pwNewObject = playerObj.GetComponentInParent<PhotonView>();
+                    
+                    PhotonView pwNewObject = playerObj.GetComponentInParent<PhotonView>();
                         if (pwNewObject != null )
                         {
                             int id = pwNewObject.ViewID;
@@ -70,7 +74,7 @@ public class AiSearchPlayerState : AiState
                             break;
                             
                         }
-                    }
+                    
                     
                 }
 

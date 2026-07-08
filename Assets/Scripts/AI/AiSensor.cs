@@ -10,12 +10,13 @@ public class AiSensor : MonoBehaviour
     public float height = 1f;
     public int segments = 10; 
     public Color meshColor = Color.white;
-    public float scanFrequency = 30f;
+    public float scanFrequency = 60f;
     public LayerMask layerMask;
     public LayerMask occlusionLayers;
     public List<GameObject> Objects = new List<GameObject>();
+    AiAgent agent;
 
-    Collider[] colliders = new Collider[50];
+    public Collider[] colliders = new Collider[50];
     private int count;
     private float scanInterval;
     private float scanTimer;
@@ -23,6 +24,7 @@ public class AiSensor : MonoBehaviour
 
     private void Start()
     {
+        agent=GetComponent<AiAgent>();
         scanInterval = 1.0f / scanFrequency;
     }
 
@@ -54,18 +56,21 @@ public class AiSensor : MonoBehaviour
 
     public bool InSight(GameObject obj)
     {
-            Vector3 originUpdate = transform.forward * 0.4f;
-            Vector3 origin = transform.position+originUpdate;
+            Vector3 originForward = transform.forward * 0.4f;
+            Vector3 originRight = transform.right * 0.2f;
+            Vector3 origin = transform.position+originForward;
             Vector3 dest = obj.transform.position;
             Vector3 direction = dest - origin;
+            float fixedHeight = 2 * height;
 
-            if (direction.y < 0 || direction.y > height)
+            if (direction.y < -fixedHeight || direction.y > fixedHeight)
             {
                 return false;
             }
 
             direction.y = 0;
             float deltaAngle = Vector3.Angle(direction, transform.forward);
+            angle = agent.navMeshAgent.speed < 2.5f ? 60f : 30f;
             if (deltaAngle > angle)
             {
                 return false;
@@ -179,7 +184,7 @@ public class AiSensor : MonoBehaviour
             if (mesh)
             {
                 Gizmos.color = meshColor;
-                Gizmos.DrawMesh(mesh, transform.position+transform.forward*0.4f, transform.rotation);
+                Gizmos.DrawMesh(mesh, transform.position+transform.forward*0.4f+transform.right*0.2f, transform.rotation);
             }
 
             Gizmos.DrawWireSphere(transform.position, distance);

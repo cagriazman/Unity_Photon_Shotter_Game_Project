@@ -50,13 +50,14 @@ public class AiChasePlayerState : AiState
                 
                 if ((targetDistance - agent.navMeshAgent.stoppingDistance)<0.01f )
                 {
-                    if (agent.seeSmthn)
+                    if (agent.aiTargetingSystem.HasTarget)
                     {
+                        lockedIn = false;
                         agent.navMeshAgent.ResetPath();
                         counter = 1f;
                         AiHealt enemyHealt = agent.playerTransform.GetComponentInParent<AiHealt>();
                         
-                        //agent._weapon.CallFire();
+                        agent._weapon.CallFire();
                         if (enemyHealt != null && enemyHealt.isDead)
                         {
                             agent.playerTransform = null;
@@ -65,7 +66,7 @@ public class AiChasePlayerState : AiState
 
                     else
                     {
-                            lockedIn = false;
+                            
                             counter += Time.deltaTime;
 
                             Vector3 dirToAi = (agent.playerTransform.position - agent.transform.position).normalized;
@@ -77,7 +78,7 @@ public class AiChasePlayerState : AiState
                             
                             Vector3 newFlankPosition = ( dirToAi * (8f+counter));
 
-                            //agent.navMeshAgent.SetDestination(agent.playerTransform.position + newFlankPosition);
+                            agent.navMeshAgent.SetDestination(agent.playerTransform.position + newFlankPosition);
                             
                             
                             

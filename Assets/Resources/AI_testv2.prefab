@@ -4699,15 +4699,66 @@ MonoBehaviour:
   angle: 30
   height: 1.8
   segments: 10
-  meshColor: {r: 1, g: 0, b: 0, a: 0.53333336}
+  meshColor: {r: 0, g: 0.6833334, b: 1, a: 0.78039217}
   scanFrequency: 30
   layerMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 768
   occlusionLayers:
     serializedVersion: 2
     m_Bits: 128
   Objects: []
+  colliders:
+  - {fileID: 1695369669344665031}
+  - {fileID: 5184969151603668311}
+  - {fileID: 8074244374476662393}
+  - {fileID: 8481401846733814808}
+  - {fileID: 6533188688964447874}
+  - {fileID: 3373062589717051565}
+  - {fileID: 3571508070331201935}
+  - {fileID: 3320100194664056089}
+  - {fileID: 1378379797029152443}
+  - {fileID: 4342519146407953458}
+  - {fileID: 7034956418127714117}
+  - {fileID: 4342519146407953458}
+  - {fileID: 7034956418127714117}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &141429535837158926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4720,7 +4771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 192824c0e54dc344a9ebfa1b8f1275e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AiTargetingSystem
-  timeSpan: 3
+  timeSpan: 0.5
 --- !u!1 &3196444932049891544
 GameObject:
   m_ObjectHideFlags: 0

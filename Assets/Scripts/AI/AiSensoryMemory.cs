@@ -43,6 +43,10 @@ public class AiSensoryMemory
 
     void RefreshingMemory(GameObject agent,GameObject target)
     {
+        if (target == null || agent == null)
+        {
+            return; 
+        }
         AiMemory memory = FetchMemory(target);
         memory.gameObject = target;
         memory.position = target.transform.position;

@@ -89,9 +89,12 @@ public class WeaponIK : MonoBehaviour
     void LateUpdate()
     {           
         target = agent.playerTransform;
-        //GameObject go = agent.playerTransform.gameObject;
-        if (target != null)        AimToTarget(bone,GetAimPosition());
-        else AimToTarget(bone,transform.forward);
+        if (target != null&&agent.aiTargetingSystem.HasTarget)        AimToTarget(bone,GetAimPosition());
+        else
+        {
+            agent.animator.SetFloat("Ai_fareIcinYtyYn", 0f, 0.2f, Time.deltaTime);
+            AimToTarget(bone, transform.forward);
+        }
     }
 
     private void AimToTarget(Transform bone1, Vector3 targetDir)
