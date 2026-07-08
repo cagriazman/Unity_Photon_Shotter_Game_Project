@@ -36,16 +36,4 @@ This project strictly follows Object-Oriented Programming (OOP) principles to en
 * **Modularity:** Scripts are divided into strict managers (e.g., Round Management) and specific behavior classes.
 * **Physics & Rendering:** Utilizes Unity's Universal Render Pipeline (URP) and optimized mesh handling to prevent physics query instability.
 
-## 💻 Installation & Setup
 
-Since this repository uses Git LFS for large assets (`.fbx`, `.png`, etc.), make sure you have Git LFS installed before cloning.
-
-```bash
-# 1. Install Git LFS
-git lfs install
-
-# 2. Clone the repository
-git clone [https://github.com/cagriazman/Unity_Photon_Shooter_Game_Project.git](https://github.com/cagriazman/Unity_Photon_Shooter_Game_Project.git)
-
-# 3. Pull LFS files
-git lfs pull
