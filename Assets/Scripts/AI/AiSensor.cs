@@ -58,7 +58,7 @@ public class AiSensor : MonoBehaviour
     {
             Vector3 originForward = transform.forward * 0.4f;
             Vector3 originRight = transform.right * 0.2f;
-            Vector3 origin = transform.position+originForward;
+            Vector3 origin = transform.position+originForward+originRight;
             Vector3 dest = obj.transform.position;
             Vector3 direction = dest - origin;
             float fixedHeight = 2 * height;
@@ -70,7 +70,7 @@ public class AiSensor : MonoBehaviour
 
             direction.y = 0;
             float deltaAngle = Vector3.Angle(direction, transform.forward);
-            angle = agent.navMeshAgent.speed < 2.5f ? 60f : 30f;
+            angle = agent.navMeshAgent.speed < 1f ? 90f : 30f;
             if (deltaAngle > angle)
             {
                 return false;
@@ -82,6 +82,8 @@ public class AiSensor : MonoBehaviour
             {
                 return false;
             }
+
+            if (ValidateTeam.PerformTeam(agent, obj)) return false;
             
             return true;
         }
@@ -181,12 +183,12 @@ public class AiSensor : MonoBehaviour
 
         private void OnDrawGizmos()
         {
-            if (mesh)
-            {
-                Gizmos.color = meshColor;
-                Gizmos.DrawMesh(mesh, transform.position+transform.forward*0.4f+transform.right*0.2f, transform.rotation);
-            }
-
+            // if (mesh)
+            // {
+            //     Gizmos.color = meshColor;
+            //     Gizmos.DrawMesh(mesh, transform.position+transform.forward*0.4f+transform.right*0.2f, transform.rotation);
+            // }
+        
             Gizmos.DrawWireSphere(transform.position, distance);
             
         }

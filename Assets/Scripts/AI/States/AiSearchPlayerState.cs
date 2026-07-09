@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
 public class AiSearchPlayerState : AiState
 {
@@ -18,6 +17,7 @@ public class AiSearchPlayerState : AiState
             int index = agent.pwId % 4;
             if(agent.playerTransform != null)agent.stateMachine.ChangeState(AiStateId.ChasePlayer);
 
+            //patrol
             agent.currentSpeed = agent.navMeshAgent.velocity.magnitude;
             agent.navMeshAgent.SetDestination(agent.patrolPoints[3]);
             agent.animator.SetFloat("Ai_dikey_yon", agent.currentSpeed, 0.2f, Time.deltaTime);
@@ -34,46 +34,16 @@ public class AiSearchPlayerState : AiState
                         continue; 
                     }
                     GameObject playerObj = agent.Sensor.colliders[i].gameObject;
-                    
-                    
-                    OyuncuIcın player = playerObj.GetComponentInParent<OyuncuIcın>();
-                    AiAgent bot = playerObj.GetComponentInParent<AiAgent>();
-                    AiHealt botHealt = playerObj.GetComponentInParent<AiHealt>();
 
-                    int TempTeamNumber = -1; 
-
-                    if (player != null)
-                    {
-                        TempTeamNumber = player.teamNumber;
-                    }
-                    else if (bot != null)
-                    {
-                        TempTeamNumber = bot.teamNumber;
-                        if (botHealt.isDead)
-                        {
-                            continue;
-                        }
-                    }
-                    else
-                    {
-                        continue; 
-                    }
-                    if (agent.teamNumber == TempTeamNumber || TempTeamNumber == -1)
+                    if (ValidateTeam.PerformTeam(agent, playerObj))
                     {
                         continue;
                     }
                     
                     
-                    PhotonView pwNewObject = playerObj.GetComponentInParent<PhotonView>();
-                        if (pwNewObject != null )
-                        {
-                            int id = pwNewObject.ViewID;
-
-                            agent.changeId(id);
-
-                            break;
-                            
-                        }
+                    
+                    agent.changeId(FindPwId.GetViewId(playerObj)); 
+                    break;
                     
                     
                 }
@@ -83,6 +53,37 @@ public class AiSearchPlayerState : AiState
                 
             }
         }
+
+        //private void ValidateTeam(AiAgent agent,GameObject playerObj)
+        // {
+        //     OyuncuIcın player = playerObj.GetComponentInParent<OyuncuIcın>();
+        //     AiAgent bot = playerObj.GetComponentInParent<AiAgent>();
+        //     AiHealt botHealt = playerObj.GetComponentInParent<AiHealt>();
+        //
+        //     int TempTeamNumber = -1; 
+        //
+        //     if (player != null)
+        //     {
+        //         TempTeamNumber = player.teamNumber;
+        //     }
+        //     else if (bot != null)
+        //     {
+        //         TempTeamNumber = bot.teamNumber;
+        //         if (botHealt.isDead)
+        //         {
+        //             continue;
+        //         }
+        //     }
+        //     else
+        //     {
+        //         continue; 
+        //     }
+        //     if (agent.teamNumber == TempTeamNumber || TempTeamNumber == -1)
+        //     {
+        //         continue;
+        //     }
+        //     
+        // }
 
         public void Exit(AiAgent agent)
         {

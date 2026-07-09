@@ -13,7 +13,6 @@ public class AiChasePlayerState : AiState
 
     public void Enter(AiAgent agent)
     {
-        agent.navMeshAgent.stoppingDistance=13f; 
         lockedIn = true;
         
     }
@@ -23,9 +22,9 @@ public class AiChasePlayerState : AiState
         float currentAnimSpeedValue=agent.animator.GetFloat("Ai_dikey_yon");
         if (agent.playerTransform != null)
         {
-            ///////////////////////////////////////////////////////////////////////////NavMeshAgent Path Visual
             if (agent.transform.IsTargetInRange(agent.playerTransform, agent.detectionRadius))
             {
+                ///////////////////////////////////////////////////////////////////////////NavMeshAgent Path Visual
                 UnityEngine.AI.NavMeshPath currentPath = agent.navMeshAgent.path;
                 if (currentPath.corners.Length > 1)
                 {
@@ -46,15 +45,11 @@ public class AiChasePlayerState : AiState
                 float targetDistance = (agent.playerTransform.position - agent.transform.position).magnitude;
                     
                 
-                 
-                
-                if ((targetDistance - agent.navMeshAgent.stoppingDistance)<0.01f )
+                if (agent.aiTargetingSystem.HasTarget)
                 {
-                    if (agent.aiTargetingSystem.HasTarget)
-                    {
-                        lockedIn = false;
+                        //lockedIn = false;
                         agent.navMeshAgent.ResetPath();
-                        counter = 1f;
+                        //counter = 1f;
                         AiHealt enemyHealt = agent.playerTransform.GetComponentInParent<AiHealt>();
                         
                         agent._weapon.CallFire();
@@ -62,50 +57,20 @@ public class AiChasePlayerState : AiState
                         {
                             agent.playerTransform = null;
                         }
-                    }
-
-                    else
-                    {
-                            
-                            counter += Time.deltaTime;
-
-                            Vector3 dirToAi = (agent.playerTransform.position - agent.transform.position).normalized;
-                            // float signedAngle = Vector3.SignedAngle(agent.transform.forward, dirToAi, Vector3.up);
-                            // float leftOrRight = Mathf.Sign(signedAngle);
-                            //float flankAngle = leftOrRight * 60f; 
-                            //Vector3 rotatedDir = Quaternion.Euler(0, flankAngle, 0) * dirToAi;
-                            
-                            
-                            Vector3 newFlankPosition = ( dirToAi * (8f+counter));
-
-                            agent.navMeshAgent.SetDestination(agent.playerTransform.position + newFlankPosition);
-                            
-                            
-                            
-                            // Debug.DrawLine(agent.transform.position, agent.transform.position+dirToAi, Color.blue, 10);
-                            // Debug.DrawLine(agent.transform.position, agent.transform.position+rotatedDir, Color.yellow, 0.1f);
-                            // Debug.DrawLine(agent.transform.position, agent.transform.position+newFlankPosition, Color.white, 0.1f);
-    
-                            Debug.Log("Bot cant SEE!!");
-                        
-                        
-                    }
                 }
-                else
-                {
-                    lockedIn = true;
-                    
-                }
+
+                
+                
+                
                
             }
             else
             {
-                agent.animator.SetFloat("Ai_dikey_yon", 0f, 0.25f, Time.deltaTime);
+                //agent.animator.SetFloat("Ai_dikey_yon", 0f, 0.25f, Time.deltaTime);
                  
-                if (currentAnimSpeedValue < 0.01f)
-                {
+                
                     if(PhotonNetwork.IsMasterClient) agent.changeId(0);
-                }
+                
             }
         }
         else

@@ -61,40 +61,20 @@ public class AiAgent : MonoBehaviourPun
         stateMachine.RegisterState(new AiAttackPlayerState());
         stateMachine.ChangeState(initialState);
          teamNumber= (int)toRegards[0];
-       
-        
+
         GorseliUygula(teamNumber);
     }
 
     
     void Update()
     {
-        // seeSmthn=PerformRaycast
-        // (
-        //     _weapon.aimPos.position,
-        //     _weapon.aimPos.forward,
-        //     detectionRadius*0.85f,
-        //     enemyLayer
-        // );
-        
-
-        
-        
         stateMachine.Update();
         Debug.Log(stateMachine.currentState);
     }
 
    
 
-    // public bool PerformRaycast(Vector3 origin, Vector3 direction, float distance, LayerMask targetMask)
-    // {
-    //     Color rayColor = seeSmthn ? Color.green : Color.red;
-    //     Debug.DrawRay(origin,
-    //         direction *distance,
-    //         rayColor,
-    //         .005f);
-    //     return Physics.Raycast(origin, direction, distance, targetMask);
-    // }
+    
     public void changeId(int newId)
     {
         if (cacheId != newId)

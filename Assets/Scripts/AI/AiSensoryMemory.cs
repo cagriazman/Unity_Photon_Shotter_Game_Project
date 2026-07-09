@@ -35,7 +35,11 @@ public class AiSensoryMemory
     public AiMemory IsFirstTarget(float minDistance)
     {
         AiMemory memory = memories.Find(x =>x.distance == minDistance);
-        if (memory != null) return memory;
+        if (memory != null)
+        {
+
+            return memory;
+        }
         return null;
     }
     

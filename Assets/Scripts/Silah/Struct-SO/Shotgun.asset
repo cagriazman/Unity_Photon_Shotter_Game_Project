@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SilahOzellikleriOS
   silahTur: 1
   atesHizi: 1.2
-  vurusHasari: 10
-  menzil: 30
+  vurusHasari: 40
+  menzil: 40
   sacilma: 0.15
   sacmaSayisi: 8
   recoilPower: 0.02
