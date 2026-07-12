@@ -1,39 +1,43 @@
-# 🎮 Multiplayer FPS Game 
+🎮 Multiplayer FPS Arena & Custom AI Engine
+A high-paced, real-time multiplayer First-Person Shooter (FPS) game built with Unity and Photon Unity Networking (PUN 2).
 
-![Unity](https://img.shields.io/badge/Unity-100000?style=for-the-badge&logo=unity&logoColor=white)
-![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
-![Photon](https://img.shields.io/badge/Photon_PUN-000000?style=for-the-badge&logo=photon&logoColor=white)
+Unlike standard FPS prototypes, this project is engineered with a strict focus on Software Architecture, Memory Management, and Scalable Systems. It demonstrates advanced networked player synchronization, a modular Artificial Intelligence engine, and decoupled codebase structures adhering to Object-Oriented Programming (OOP) principles.
 
-A high-paced, real-time multiplayer First-Person Shooter (FPS) game built with Unity and Photon Unity Networking (PUN). This project demonstrates advanced gameplay mechanics, networked player synchronization, and scalable code architecture.
+🚀 Key Features & Systems
+🌐 Robust Multiplayer Synchronization:
+Seamless real-time synchronization utilizing Photon PUN. Includes lobby management, instance-based room creation, and highly optimized Remote Procedure Call (RPC) traffic to handle combat events, health states, and animations with minimal latency.
 
-## 🚀 Key Features
+🧠 Custom AI State Machine:
+A deeply integrated, modular AI engine. Enemy agents do not rely on rigid, performance-heavy Update loops. Instead, they utilize a dynamic State Machine architecture (e.g., AiChasePlayerState, AiPatrolState) for realistic decision-making, threat detection, and NavMesh-based pathfinding.
 
-* **🌐 Real-Time Multiplayer:** Seamless player synchronization, voice chat, and lobby management using Photon PUN.
-* **🧠 AI State Machine:** Custom-built Artificial Intelligence utilizing a State Machine architecture (e.g., `AiChasePlayerState`) for realistic enemy behavior and combat mechanics.
-* **🎯 Advanced Weapon & Camera Systems:** Precise shooting mechanics (including Sniper systems) integrated with Cinemachine for smooth, dynamic camera controls.
-* **🖥️ Cross-Platform Support:** Fully optimized and built for both native Windows and macOS (Apple Silicon ARM) environments.
-* **📦 Optimized Version Control:** Large 3D models and textures are efficiently managed using **Git LFS**, keeping the core repository clean and lightweight.
+🎯 Advanced Weapon & Combat Mechanics:
+Dynamic weapon systems handling everything from rapid-fire raycast weapons to precise Sniper mechanics. Fully integrated with Cinemachine for responsive camera recoil, dynamic FOV shifts, and smooth targeting transitions.
 
----
+🖥️ Cross-Platform Optimization:
+Configured and tested for native performance across both Windows and macOS (Apple Silicon ARM) environments.
 
-## 📸 Showcase
+📦 Enterprise-Level Version Control:
+Large 3D models, audio, and high-res textures are strictly managed via Git Large File Storage (LFS), ensuring the codebase remains lightweight and commit histories stay clean.
 
-### Multiplayer Synchronization
-*(Insert a 3-5 second GIF here showing two different game instances interacting, proving your network logic works)*
-![Multiplayer Sync](link_to_your_gif_here)
+📸 In-Game Showcase
+🌐 Networked Combat & Synchronization
+Real-time data exchange across different clients. This demonstrates accurate hit registration and state synchronization over the network without severe desync.
 
-### AI Combat & State Machine
-*(Insert a screenshot or short GIF showing the AI chasing or attacking the player)*
-![AI Combat](link_to_your_gif_here)
+🤖 AI Behavior & Sensory Tracking
+Demonstrating the AI State Machine in action. The agent dynamically shifts from patrolling to chasing, utilizing NavMesh for spatial awareness and path calculation.
 
----
+🛠️ Technical Architecture & Clean Code
+This project was built to be maintainable, readable, and highly performant. The architecture strictly isolates distinct systems to prevent tightly-coupled "spaghetti code."
 
-## 🛠️ Technical Architecture
+1. Memory Optimization (Zero-Allocation)
+Garbage Collection (GC) spikes are eliminated in critical combat loops. Instead of allocating new arrays every frame, the project uses memory-safe techniques like Physics.OverlapSphereNonAlloc for AI sensory sweeps, maintaining high FPS even when multiple bots are active.
 
-This project strictly follows Object-Oriented Programming (OOP) principles to ensure maintainability and scalability.
+2. Clean Code & Structural Modularity
+Static Utility Classes: Repetitive mathematical operations, distance checks, and damage calculations are abstracted into stateless, static helper classes.
 
-* **Network Logic:** Photon PUN handles Remote Procedure Calls (RPCs) and data synchronization across the network.
-* **Modularity:** Scripts are divided into strict managers (e.g., Round Management) and specific behavior classes.
-* **Physics & Rendering:** Utilizes Unity's Universal Render Pipeline (URP) and optimized mesh handling to prevent physics query instability.
+Extension Methods: Implementation of custom C# extension methods (e.g., safely extracting PhotonView.ViewID from dynamic network objects) to keep the core logic highly readable.
 
+Instance Independence: Strictly avoided shared static states for individual objects. Every player and AI agent operates on its own instance data (Health, Target, Ammo), completely eliminating "Hive Mind" bugs.
 
+3. Rendering & Physics
+Utilizes Unity's Universal Render Pipeline (URP) for optimized draw calls and modern lighting solutions, alongside streamlined mesh colliders to maintain stability during intensive physics calculations.
