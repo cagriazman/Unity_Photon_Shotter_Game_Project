@@ -19,7 +19,6 @@ Configured and tested for native performance across both Windows and macOS (Appl
 📦 Enterprise-Level Version Control:
 Large 3D models, audio, and high-res textures are strictly managed via Git Large File Storage (LFS), ensuring the codebase remains lightweight and commit histories stay clean.
 
-📸 In-Game Showcase
 🌐 Networked Combat & Synchronization
 Real-time data exchange across different clients. This demonstrates accurate hit registration and state synchronization over the network without severe desync.
 
