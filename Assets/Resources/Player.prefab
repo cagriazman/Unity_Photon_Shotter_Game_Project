@@ -5100,8 +5100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 778789568dd78b64aa370eaf284f64d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StarterAssets.PlayerMovement
-  MoveSpeed: 5
-  SprintSpeed: 9
+  MoveSpeed: 4
+  SprintSpeed: 7
   RotationSpeed: 1
   SpeedChangeRate: 7
   JumpHeight: 1.2
