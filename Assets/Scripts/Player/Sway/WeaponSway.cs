@@ -31,8 +31,9 @@ public class WeaponSway : MonoBehaviour
     {
         float moveX = _input.move.x;
         float moveY = _input.move.y;
+        
 
-        float targetRotX = Mathf.Clamp(moveY * rotationAmount, -maxRotationAmount, maxRotationAmount);
+        float targetRotX = Mathf.Clamp(moveY * rotationAmount, -1, maxRotationAmount);
         float targetRotZ = Mathf.Clamp(moveX * rotationAmount, -maxRotationAmount, maxRotationAmount);
         Quaternion targetRotation = Quaternion.Euler(new Vector3(targetRotX, 0, targetRotZ));
 
