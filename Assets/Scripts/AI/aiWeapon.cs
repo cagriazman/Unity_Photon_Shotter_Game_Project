@@ -65,7 +65,7 @@ public class aiWeapon : MonoBehaviour
             var tracer = Instantiate(tracerEffect,aimPos);
             tracer.AddPosition(aimPos.position);
             
-            Vector3 yon =  SilahFizigi.RastgeleYonHesapla(aimPos, silahOzellikleriOS.mevcutSacilma);
+            Vector3 yon =  myPyhsic.calculateDir(aimPos, silahOzellikleriOS.mevcutSacilma);
             Ray isin = new Ray(aimPos.position, yon);
             Vector3 vurusNoktasi;
             

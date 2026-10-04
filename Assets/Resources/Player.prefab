@@ -4025,6 +4025,7 @@ MonoBehaviour:
   pw: {fileID: 425090608835477607}
   swayScript: {fileID: 1847879078933475817}
   _input: {fileID: 0}
+  recoilTimer: 0
 --- !u!114 &5762346481260540968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9242,6 +9243,7 @@ MonoBehaviour:
   pw: {fileID: 425090608835477607}
   swayScript: {fileID: 1847879078933475817}
   _input: {fileID: 0}
+  recoilTimer: 0
 --- !u!114 &157663067435589988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13419,7 +13421,6 @@ MonoBehaviour:
   swaySmooth: 2
   returnSmooth: 5
   isAiming: 0
-  _input: {fileID: 0}
 --- !u!114 &4277655155683352346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17238,6 +17239,7 @@ MonoBehaviour:
   pw: {fileID: 425090608835477607}
   swayScript: {fileID: 1847879078933475817}
   _input: {fileID: 0}
+  recoilTimer: 0
   vCam: {fileID: 57611619750613429}
   scopeOverlay: {fileID: 6369725474605885728}
   scopeFOV: 15
@@ -23542,6 +23544,7 @@ MonoBehaviour:
   pw: {fileID: 425090608835477607}
   swayScript: {fileID: 1847879078933475817}
   _input: {fileID: 0}
+  recoilTimer: 0
 --- !u!114 &6583873999772035416
 MonoBehaviour:
   m_ObjectHideFlags: 0

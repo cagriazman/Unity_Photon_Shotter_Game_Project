@@ -51,7 +51,9 @@ public abstract class SilahTaban : MonoBehaviourPun
     
     protected camRecoil  camRecoil;
     
-    
+    private CharacterController controller; 
+    [SerializeField] private float recoilTimer=0;
+    private float sensitivityForRecoil;
 
     protected virtual void Start()
     {
@@ -59,6 +61,7 @@ public abstract class SilahTaban : MonoBehaviourPun
         _input = GetComponentInParent<StarterAssetsInputs>();
         pw = GetComponentInParent<PhotonView>();
         kamera = Camera.main;
+        controller= GetComponentInParent<CharacterController>();
         if (silahOzellikleriOS != null)
         {
             WeaponStruct = new weaponStruct(silahOzellikleriOS);
@@ -83,18 +86,32 @@ public abstract class SilahTaban : MonoBehaviourPun
         if (isReloading) return;
         
         //sacilma ayari
-        float recoilTimer;
+        if (myPyhsic.hasSpeed(&controller))
+        {
+            recoilTimer += Time.deltaTime*sensitivityForRecoil;
+            silahOzellikleriOS.mevcutSacilma += silahOzellikleriOS.sacilma * recoilTimer;
+        }
+        else
+        {
+            
+            recoilTimer = 0f;
+            silahOzellikleriOS.mevcutSacilma = 0f;
+        }
+        
+        
+        
+        
         if (ads)
         {
             crosshair.SetActive(false);
             if (swayScript) swayScript.isAiming = true;
-            silahOzellikleriOS.mevcutSacilma=silahOzellikleriOS.sacilma/2;
+            //silahOzellikleriOS.mevcutSacilma=silahOzellikleriOS.sacilma/2;
         }
         if (!ads)
         {   
             crosshair.SetActive(true);
             swayScript.isAiming = false;
-            silahOzellikleriOS.mevcutSacilma = silahOzellikleriOS.sacilma;
+            //silahOzellikleriOS.mevcutSacilma = silahOzellikleriOS.sacilma;
         }
 
         // Ateş cagir
@@ -177,7 +194,7 @@ public abstract class SilahTaban : MonoBehaviourPun
         for (int i = 0; i < silahOzellikleriOS.sacmaSayisi; i++)
         { 
             
-            Vector3 yon =  SilahFizigi.RastgeleYonHesapla(kamera.transform, silahOzellikleriOS.mevcutSacilma);
+            Vector3 yon =  myPyhsic.calculateDir(kamera.transform, silahOzellikleriOS.mevcutSacilma);
             Ray isin = new Ray(kamera.transform.position, yon);
             Vector3 vurusNoktasi;
 
