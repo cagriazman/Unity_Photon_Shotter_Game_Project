@@ -54,7 +54,7 @@ public abstract class SilahTaban : MonoBehaviourPun
     private CharacterController controller; 
     
     [SerializeField] private float recoilTimer=1;
-    [SerializeField] private float sensitivityForRecoil = 0.1f;
+    [SerializeField] private float sensitivityForRecoil = 2.5f;
 
     protected virtual void Start()
     {
@@ -87,16 +87,15 @@ public abstract class SilahTaban : MonoBehaviourPun
         if (isReloading) return;
         
         //sacilma ayari
-        if (myPyhsic.hasSpeed(controller))
+        if (controller.velocity.magnitude > 0.01f)
         {
             recoilTimer += Time.deltaTime*sensitivityForRecoil;
             silahOzellikleriOS.mevcutSacilma = silahOzellikleriOS.sacilma * recoilTimer;
         }
         else
         {
-            
             recoilTimer = 1f;
-            silahOzellikleriOS.mevcutSacilma = 0f;
+            silahOzellikleriOS.mevcutSacilma = silahOzellikleriOS.sacilma;
         }
         
         

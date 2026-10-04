@@ -4026,6 +4026,7 @@ MonoBehaviour:
   swayScript: {fileID: 1847879078933475817}
   _input: {fileID: 0}
   recoilTimer: 0
+  sensitivityForRecoil: 0.1
 --- !u!114 &5762346481260540968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9244,6 +9245,7 @@ MonoBehaviour:
   swayScript: {fileID: 1847879078933475817}
   _input: {fileID: 0}
   recoilTimer: 0
+  sensitivityForRecoil: 0.1
 --- !u!114 &157663067435589988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17240,6 +17242,7 @@ MonoBehaviour:
   swayScript: {fileID: 1847879078933475817}
   _input: {fileID: 0}
   recoilTimer: 0
+  sensitivityForRecoil: 0.1
   vCam: {fileID: 57611619750613429}
   scopeOverlay: {fileID: 6369725474605885728}
   scopeFOV: 15
@@ -23545,6 +23548,7 @@ MonoBehaviour:
   swayScript: {fileID: 1847879078933475817}
   _input: {fileID: 0}
   recoilTimer: 0
+  sensitivityForRecoil: 0.1
 --- !u!114 &6583873999772035416
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,15 +16,15 @@ MonoBehaviour:
   atesHizi: 10
   vurusHasari: 25
   menzil: 100
-  sacilma: 0.05
+  sacilma: 0.01
   sacmaSayisi: 1
   recoilPower: 0.02
   recoilTime: 0.05
-  yedekMermi: 250
+  yedekMermi: 900
   mevcutMermi: 30
   sarjorKapasitesi: 30
   reloadSure: 1.6
   siradakiAtisZamani: 0
-  mevcutSacilma: 0.05
+  mevcutSacilma: 0.001
   upcharRotationSpeed: 0.08
   downcharRotationSpeed: 5

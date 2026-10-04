@@ -12,15 +12,8 @@
             return (ileri + rastgele).normalized;
         }
 
-        public static bool hasSpeed(CharacterController controller)
-        {
-            Vector3 horizontalVelocity = new Vector3(controller.velocity.x, controller.velocity.y, controller.velocity.z);
-            float currentSpeed = horizontalVelocity.magnitude;
-            if (currentSpeed > 0.1f )
-            {
-                return true;
-
-            }
-            return false;
-        }
+        
+        
+        
+        
     }
