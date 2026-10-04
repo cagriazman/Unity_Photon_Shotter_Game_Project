@@ -64,14 +64,14 @@ public class AnimasyonSenkronizasyon : MonoBehaviourPun, IPunObservable
 
     void Update()
     {
-        if (photonView.IsMine)
-        {
-            animator.SetFloat("DikeyYon", Vertical);
-            animator.SetFloat("YatayYon", Horizontal);
-            animator.SetFloat("FareIcinYtyYn", HorizontalForMouse);
-
-        }
-        else
+        // if (photonView.IsMine)
+        // {
+        //     animator.SetFloat("DikeyYon", Vertical);
+        //     animator.SetFloat("YatayYon", Horizontal);
+        //     animator.SetFloat("FareIcinYtyYn", HorizontalForMouse);
+        //
+        // }
+        // else
         {
             Horizontal = Mathf.Lerp(Horizontal, targetHorizontal, Time.deltaTime * smoothSpeed);
             Vertical = Mathf.Lerp(Vertical, targetVertical, Time.deltaTime * smoothSpeed);

@@ -5105,7 +5105,7 @@ MonoBehaviour:
   RotationSpeed: 1
   SpeedChangeRate: 7
   JumpHeight: 1.2
-  Gravity: -35
+  Gravity: -18
   JumpTimeout: 0
   FallTimeout: 0
   Grounded: 1
@@ -9271,7 +9271,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.602
+  m_Volume: 0.05
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -13419,6 +13419,7 @@ MonoBehaviour:
   swaySmooth: 2
   returnSmooth: 5
   isAiming: 0
+  _input: {fileID: 0}
 --- !u!114 &4277655155683352346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15383,7 +15384,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.093
+  m_Volume: 0.024
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -20631,6 +20632,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5230963933950894421}
   - component: {fileID: 4914500905930431534}
+  - component: {fileID: 8116103452224726127}
   m_Layer: 9
   m_Name: fpsOffset
   m_TagString: Untagged
@@ -20671,6 +20673,30 @@ MonoBehaviour:
   rastgeleY: 0
   recoveryTimerAcc: 0.1
   returnDelay: 0
+--- !u!114 &8116103452224726127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6200038412566862025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b806e0dfe4266e4e9308cc96ee38333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  walkingSpeed: 14
+  bobAmountY: 0.04
+  bobAmountX: 0.027
+  sprintMultiplier: 1.6
+  jumpBobAmount: 0.08
+  landBobMultiplier: 0.015
+  maxLandBob: 0.25
+  recoverySpeed: 8
+  controller: {fileID: 933226365464593836}
+  verticalLagMultiplier: 0.008
+  maxAirOffset: 0.12
+  suspensionSmoothTime: 0.2
 --- !u!1 &6232966502007402468
 GameObject:
   m_ObjectHideFlags: 0
@@ -22962,7 +22988,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.506
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -5,10 +5,9 @@ using Random = UnityEngine.Random;
 public class camRecoil : MonoBehaviour
 {
     [SerializeField] private Vector3 randomValue;
-    Vector3 originalPos;
-    private Vector3 right;
     [SerializeField]float rastgeleX;
     [SerializeField] private float rastgeleY;
+    Vector3 originalPos;
     Quaternion orginalRot;
 
     public float recoveryTimerAcc =0.1f;
@@ -45,8 +44,10 @@ public class camRecoil : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(randomDotForRot);
             
             transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, upcharRotationSpeed * Time.deltaTime);
-            transform.localPosition = originalPos + randomDotForPos * power;
-
+            Vector3 targetPos = originalPos + randomDotForPos * power;
+            
+            transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * upcharRotationSpeed);
+            
             timer += Time.deltaTime;
             yield return null; 
         }
@@ -63,8 +64,7 @@ public class camRecoil : MonoBehaviour
         while (recoveryTimer < 1f)
         {
             transform.localRotation = Quaternion.Slerp(transform.localRotation, orginalRot, downcharRotationSpeed * Time.deltaTime);
-            //transform.localRotation = orginalRot;
-            transform.localPosition = originalPos;
+            transform.localPosition = Vector3.Lerp(transform.localPosition, originalPos, Time.deltaTime * downcharRotationSpeed);
             recoveryTimer += Time.deltaTime * recoveryTimerAcc; 
 
             yield return null;

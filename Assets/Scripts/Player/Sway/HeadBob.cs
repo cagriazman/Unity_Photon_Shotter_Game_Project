@@ -23,26 +23,33 @@ public class HeadBob : MonoBehaviour
     private float defaultPosX;
     private float timer;
     
-    private bool wasGroundedLastFrame;
-    private float lastVerticalVelocity;
-    private float verticalOffset; 
     
-    public Animator characterAnimator; 
-    private static readonly int RunCycleHash = Animator.StringToHash("RunCycle");
+
+    [Header("Havadaki Süzülme Ayarları")]
+    [Tooltip("Dikey hızın kamerayı ne kadar çekeceği katsayısı")]
+    public float verticalLagMultiplier = 0.008f; 
+    
+    [Tooltip("Kameranın yukarı veya aşağı maksimum ne kadar esneyebileceği")]
+    public float maxAirOffset = 0.12f;
+
+    [Tooltip("Süspansiyon yaylanma süresi. Değer büyüdükçe süzülme daha tembel/ağır olur.")]
+    public float suspensionSmoothTime = 0.2f;
+
+    private float currentYOffset;
+    private float yVelocityRef;
+    
+    
+    
     
     void Start()
     {
         defaultPosY = transform.localPosition.y;
         defaultPosX = transform.localPosition.x;
-        if (controller != null)
-        {
-            wasGroundedLastFrame = controller.isGrounded;
-        }
+        
     }
 
     void Update()
     {
-        
         Vector3 horizontalVelocity = new Vector3(controller.velocity.x, 0, controller.velocity.z);
         float currentSpeed = horizontalVelocity.magnitude;
 
@@ -61,13 +68,48 @@ public class HeadBob : MonoBehaviour
             
             
         }
+        
+
+            
+        
+        
         else
         {
             timer = 0;
-            Vector3 targetPosition = new Vector3(defaultPosX, defaultPosY, transform.localPosition.z);
-            transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, Time.deltaTime * 6f);
+             Vector3 targetPosition = new Vector3(defaultPosX, defaultPosY, transform.localPosition.z);
+             transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, Time.deltaTime * 6f);
         }
+        
+        
+        float targetOffset = 0f;
+
+        if (!controller.isGrounded)
+        {
+            
+            targetOffset = -controller.velocity.y * verticalLagMultiplier;
+            targetOffset = Mathf.Clamp(targetOffset, -maxAirOffset, maxAirOffset);
+        }
+        else
+        {
+            targetOffset = 0f;
+        }
+
+        
+        currentYOffset = Mathf.SmoothDamp(
+            currentYOffset, 
+            targetOffset, 
+            ref yVelocityRef, 
+            suspensionSmoothTime
+        );
+
+        Vector3 currentPos = transform.localPosition;
+        currentPos.y = defaultPosY + currentYOffset;
+        transform.localPosition = currentPos;
     }
     
     
+    
 }
+
+
+
