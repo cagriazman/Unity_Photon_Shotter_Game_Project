@@ -81,6 +81,9 @@ public abstract class SilahTaban : MonoBehaviourPun
         anim.SetBool("isRunHeld", shift_aktif);
 
         if (isReloading) return;
+        
+        //sacilma ayari
+        float recoilTimer;
         if (ads)
         {
             crosshair.SetActive(false);
@@ -249,9 +252,6 @@ public abstract class SilahTaban : MonoBehaviourPun
                         if (kanSicramaEfekti) PhotonNetwork.Instantiate(kanSicramaEfekti.name, hit.point, rotasyon);
                     }
                 }
-                
-                
-                
                 else
                 {
                     PhotonNetwork.Instantiate(betonVurusEfekti.name, hit.point, rotasyon);
