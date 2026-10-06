@@ -22,7 +22,11 @@ namespace StarterAssets
         public float RotationSpeed = 1.0f;
         [Tooltip("Acceleration and deceleration")]
         public float SpeedChangeRate = 10.0f;
-        
+        [Tooltip("control runing")]
+        public bool isCanRun;
+        private float groundCheckTimer = 0f;
+        private bool groundChecking = true;
+        [SerializeField]private float groundCheckTimerLimit=0.02f;
         
         [Space(10)]
         [Tooltip("The height the player can jump")]
@@ -254,9 +258,22 @@ namespace StarterAssets
 
         private void Move()
         {
-            
             bool isForward = _input.move.y > 0.1f && Mathf.Abs(_input.move.x) < 0.1f;
-            bool isCanRun = _input.sprint && isForward && _controller.isGrounded;
+            
+            
+            if (groundChecking != _controller.isGrounded)
+            {
+                groundCheckTimer += Time.deltaTime;
+                if (groundCheckTimer > groundCheckTimerLimit)
+                {
+                    groundChecking = _controller.isGrounded;
+                }
+            }
+            else
+            {
+                groundCheckTimer = 0f;
+            }
+            isCanRun = _input.sprint && isForward && groundChecking && !_input.getAim;
             multiplierForAnim = isCanRun ? 2f : 1f;
             ak47anim.SetBool("isRunHeld", isCanRun);
 
@@ -275,7 +292,7 @@ namespace StarterAssets
                 targetSpeed=CrouchSpeed;
             
             else if (!isForward && _input.move != Vector2.zero)
-                targetSpeed = MoveSpeed * 0.8f;
+                targetSpeed = MoveSpeed * 0.7f;
 
             else
                 targetSpeed = MoveSpeed;
@@ -322,6 +339,8 @@ namespace StarterAssets
             // move the player
             _controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) 
                              + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+            
+            Debug.Log("Target speed: "+targetSpeed);
         }
 
         private void JumpAndGravity()
