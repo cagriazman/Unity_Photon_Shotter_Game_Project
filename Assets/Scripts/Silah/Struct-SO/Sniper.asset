@@ -16,7 +16,7 @@ MonoBehaviour:
   atesHizi: 1
   vurusHasari: 100
   menzil: 500
-  sacilma: 0.01
+  sacilma: 0
   sacmaSayisi: 1
   recoilPower: 0.02
   recoilTime: 0.04

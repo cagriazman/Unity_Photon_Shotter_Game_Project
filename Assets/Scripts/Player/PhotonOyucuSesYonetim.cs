@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using Photon.Pun;
+using Random = UnityEngine.Random;
 
 
 public class PhotonOyucuSesYonetim : MonoBehaviourPun
@@ -30,7 +32,13 @@ public class PhotonOyucuSesYonetim : MonoBehaviourPun
     
     [Header("Mermi İzi (Tracer) Ayarı")]
     public TrailRenderer tracerEffect;
+    private PersistentTracer _tracer;
 
+    private void Start()
+    {
+        _tracer = GetComponentInChildren<PersistentTracer>();
+
+    }
 
     [PunRPC]
     public void RPC_PlayShootSource(byte _index)
@@ -67,7 +75,12 @@ public class PhotonOyucuSesYonetim : MonoBehaviourPun
         }
     }
 
-    
+    public void playSmoke(int index)
+    {        
+        Transform kullanilacakNokta = photonView.IsMine ? fpsNamlu[index] : tpsNamlu[index];
+
+        _tracer.SpawnTracer(kullanilacakNokta.position);
+    }
 
     public void AnimasyonAdimTetikle()
     {

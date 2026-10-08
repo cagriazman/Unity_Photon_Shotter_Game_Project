@@ -2,7 +2,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 
-public class VurulduVeOldu : MonoBehaviour
+public class HitMarker : MonoBehaviour
 {
     [Header("UI")]
     public Animation hitmarkeranim;
@@ -11,7 +11,7 @@ public class VurulduVeOldu : MonoBehaviour
     public Animation killmarkeranim;
     public AudioSource killmarkerSes;
 
-    public void Vurduk(int _vurusHasari)
+    public void playWasShot(int _vurusHasari)
     {
         hitmarkeranim.Stop();
         hitmarkeranim.Play();
@@ -21,7 +21,7 @@ public class VurulduVeOldu : MonoBehaviour
         hitMarkerSes.Play();
         PhotonNetwork.LocalPlayer.AddScore(_vurusHasari);
     }
-    public void animOldu(string _oldurulen)
+    public void playDeath(string _oldurulen)
     {
         killmarkeranim.Stop();
         killmarkeranim.Play();

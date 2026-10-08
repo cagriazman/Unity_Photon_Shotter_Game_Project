@@ -8914,7 +8914,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 499
   anim: {fileID: 6594450658088324071}
-  VurulduScripti: {fileID: 0}
+  hitMarker: {fileID: 0}
   _animasyonSenkronizasyon: {fileID: 0}
   mermiYazi: {fileID: 0}
   mermiGostergesi: {fileID: 0}
@@ -12231,6 +12231,7 @@ GameObject:
   - component: {fileID: 1279725462452844995}
   - component: {fileID: 3920322689518979567}
   - component: {fileID: 2563309161923533194}
+  - component: {fileID: 5374741917812552959}
   m_Layer: 10
   m_Name: 'AK47 '
   m_TagString: Ai
@@ -12346,6 +12347,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.05, y: 0.37383944, z: 1.3874904}
   m_Center: {x: 0.04, y: 0, z: 0.29}
+--- !u!114 &5374741917812552959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8344851209882052575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f73cfb91a99ae024997617726e406e00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &8371036769079343380
 GameObject:
   m_ObjectHideFlags: 0

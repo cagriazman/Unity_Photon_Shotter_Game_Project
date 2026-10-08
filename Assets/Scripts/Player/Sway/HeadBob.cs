@@ -1,3 +1,4 @@
+using StarterAssets;
 using UnityEngine;
 
 public class HeadBob : MonoBehaviour
@@ -38,11 +39,12 @@ public class HeadBob : MonoBehaviour
     private float currentYOffset;
     private float yVelocityRef;
     
-    
+    private FirstPersonController _controller;
     
     
     void Start()
     {
+        _controller = GetComponentInParent<FirstPersonController>();
         defaultPosY = transform.localPosition.y;
         defaultPosX = transform.localPosition.x;
         
@@ -55,7 +57,7 @@ public class HeadBob : MonoBehaviour
 
         if (currentSpeed > 0.1f && controller.isGrounded)
         {
-            bool isSprinting = Input.GetKey(KeyCode.LeftShift);
+            bool isSprinting = _controller.isCanRun;
             float speedMod = isSprinting ? sprintMultiplier : 1f;
 
             timer += Time.deltaTime * walkingSpeed * speedMod;

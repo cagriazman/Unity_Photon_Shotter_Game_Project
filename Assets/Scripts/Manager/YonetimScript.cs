@@ -54,8 +54,8 @@ public class YonetimScript : MonoBehaviourPunCallbacks
     {
         Debug.Log("Bağlanıyor..");
         //baglanCanvasi.SetActive(true);
-        PhotonNetwork.ConnectUsingSettings();
 
+        PhotonNetwork.ConnectUsingSettings();
     }
     public override void OnConnectedToMaster()
     {

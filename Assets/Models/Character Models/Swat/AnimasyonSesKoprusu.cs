@@ -26,13 +26,13 @@ public class AnimasyonSesKoprusu : MonoBehaviour
     public void AnimDusmeTetikle()
     {
         anaYonetici.AnimDusmeTetikle();
-        Debug.Log("dustum");
+        //Debug.Log("dustum");
 
     }//model animatorcontrollerdan içinden animClipden gelen eventler
     public void AnimYukselmeTetikle()
     {
         anaYonetici.AnimYukselmeTetikle();
-        Debug.Log("yukseldim");
+        //Debug.Log("yukseldim");
     }
     public void ReloadAnimMagCikart()
     {

@@ -26,7 +26,28 @@ namespace StarterAssets
         public bool isCanRun;
         private float groundCheckTimer = 0f;
         private bool groundChecking = true;
-        [SerializeField]private float groundCheckTimerLimit=0.02f;
+        [SerializeField] private float groundCheckTimerLimit = 0.02f;
+        [SerializeField] private float runUnlockLimit = 8.0f;
+        private Vector3 _currentMoveDirection = Vector3.forward;
+
+        [Header("Yön Değiştirme Yumuşatma")]
+        [Tooltip("Karakterin yönünü ne kadar hızlı çevirebileceği (Radyan/sn). Değer düştükçe ani sapmalar engellenir.")]
+        [SerializeField] private float directionChangeSpeed = 8.0f;
+        
+        //const turning made some speed increatment
+        [Header("Look / Turn Penalty (Dönüş Hız Cezası)")]
+        [Tooltip("Mouse/Analog bu eşiğin üzerinde döndürülürse hız cezası devreye girer")]
+        [SerializeField] private float LookPenaltyThreshold = 4.0f;
+
+        [Tooltip("Dönüş anında koşu hızının düşebileceği taban çarpan (Örn: 0.5f -> hız en fazla yarıya iner)")]
+        [Range(0.2f, 1.0f)]
+        [SerializeField] private float MinTurnPenaltyMultiplier = 0.5f;
+
+        [Tooltip("Dönüş şiddetinin hıza ne kadar sert etki edeceği")]
+        [SerializeField] private float TurnPenaltySensitivity = 0.08f;
+        [SerializeField] private float tmp ;
+
+        
         
         [Space(10)]
         [Tooltip("The height the player can jump")]
@@ -166,18 +187,14 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
-            //if(ChatYonetim.chatAcikMi)return;
             CameraRotation();
         }
 
-        // --- 5. YENİ METOT: Animasyon İşlemleri ---
         private void HandleCustomAnimations()
         {
-            // A) Animasyon Yumuşatma ve Senkronizasyon
              
             Vector2 targetAnimInput = _input.move * multiplierForAnim;
 
-            // Movement.cs'deki SmoothDamp mantığı
             currentAnimInput = Vector2.SmoothDamp(currentAnimInput, targetAnimInput, ref animVelocity, animSmoothTime);
 
             if (_animasyonSenkronizasyon != null)
@@ -186,7 +203,6 @@ namespace StarterAssets
                 _animasyonSenkronizasyon.Vertical = currentAnimInput.y;
             }
 
-            // B) Silah Animasyonu (Speed parametresi)
             if (ak47anim != null)
             {
                 float animSpeed = _input.move.magnitude > 0 ? 1f : 0f;
@@ -257,9 +273,10 @@ namespace StarterAssets
         }
 
         private void Move()
-        {
+        {                
+            bool runFlag = false;
+
             bool isForward = _input.move.y > 0.1f && Mathf.Abs(_input.move.x) < 0.1f;
-            
             
             if (groundChecking != _controller.isGrounded)
             {
@@ -273,7 +290,7 @@ namespace StarterAssets
             {
                 groundCheckTimer = 0f;
             }
-            isCanRun = _input.sprint && isForward && groundChecking && !_input.getAim;
+            isCanRun = _input.sprint && isForward  && !_input.getAim;
             multiplierForAnim = isCanRun ? 2f : 1f;
             ak47anim.SetBool("isRunHeld", isCanRun);
 
@@ -282,20 +299,46 @@ namespace StarterAssets
             // set target speed based on move speed, sprint speed and if sprint is pressed
             //targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
             
-            if (isCanRun)
+            if (isCanRun && ak47anim.GetBool("isRunHeld")&& _input.move != Vector2.zero)
             {
-                targetSpeed=SprintSpeed;
+                
+                float turnMultiplier = 1f;
+                float lookTurnRate = Mathf.Abs(_input.look.x);
 
+                // Eğer fare eşikten daha hızlı savruluyorsa ceza hesapla
+                if (lookTurnRate > LookPenaltyThreshold)
+                {
+                    float excessLook = lookTurnRate - LookPenaltyThreshold;
+            
+                    // Dönüş şiddeti arttıkça çarpan 1.0'dan aşağıya doğru düşer
+                    turnMultiplier = 1.0f / (1.0f + excessLook * TurnPenaltySensitivity);
+            
+                    // Hızın belirlenen alt sınırın altına inmesini engelle
+                    turnMultiplier = Mathf.Max(turnMultiplier, MinTurnPenaltyMultiplier);
+
+                    
+                }
+                targetSpeed=SprintSpeed*turnMultiplier;
+                
             }
             
             else if(_input.crouch)
                 targetSpeed=CrouchSpeed;
             
             else if (!isForward && _input.move != Vector2.zero)
-                targetSpeed = MoveSpeed * 0.7f;
+            {
+                targetSpeed = MoveSpeed * 0.67f;
+                //SpeedChangeRate = 2f;
+                
+            }
+            
+            
 
             else
+            {
                 targetSpeed = MoveSpeed;
+                //SpeedChangeRate = 10;
+            }
             
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
@@ -340,7 +383,12 @@ namespace StarterAssets
             _controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) 
                              + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
             
-            Debug.Log("Target speed: "+targetSpeed);
+            Debug.Log("Target speed: "+_speed);
+        }
+
+        private bool isRunFlagUp(float currentSpeed)
+        {
+            return (currentSpeed > runUnlockLimit);
         }
 
         private void JumpAndGravity()

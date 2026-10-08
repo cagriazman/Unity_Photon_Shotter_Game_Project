@@ -5,6 +5,7 @@ using Photon.Pun;
 using System.Collections;
 using StarterAssets;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public abstract class SilahTaban : MonoBehaviourPun
 {
@@ -19,9 +20,10 @@ public abstract class SilahTaban : MonoBehaviourPun
     public Animator anim;
     
 
-    [Header("Scriptler")]
-    public VurulduVeOldu VurulduScripti;
+    [FormerlySerializedAs("VurulduScripti")] [Header("Scriptler")]
+    public HitMarker hitMarker;
     public AnimasyonSenkronizasyon _animasyonSenkronizasyon;
+    private ShellEjector _shellEjector;
     
     [Space]
     public TextMeshProUGUI mermiYazi;
@@ -63,6 +65,7 @@ public abstract class SilahTaban : MonoBehaviourPun
         pw = GetComponentInParent<PhotonView>();
         kamera = Camera.main;
         controller= GetComponentInParent<CharacterController>();
+        _shellEjector = GetComponent<ShellEjector>();
         if (silahOzellikleriOS != null)
         {
             WeaponStruct = new weaponStruct(silahOzellikleriOS);
@@ -80,10 +83,7 @@ public abstract class SilahTaban : MonoBehaviourPun
     {
          ads = _input.getAim;
         anim.SetBool("ADS", ads);
-
-        bool shift_aktif = _input.sprint;
-        anim.SetBool("isRunHeld", shift_aktif);
-
+        
         if (isReloading) return;
         
         //sacilma ayari
@@ -115,7 +115,11 @@ public abstract class SilahTaban : MonoBehaviourPun
         }
 
         // Ateş cagir
-        if (Mouse.current.leftButton.isPressed && Time.time >= WeaponStruct.siradakiAtisZamani && WeaponStruct.mevcutMermi > 0 && !shift_aktif)
+        if (Mouse.current.leftButton.isPressed 
+            && Time.time >= WeaponStruct.siradakiAtisZamani 
+            && WeaponStruct.mevcutMermi > 0 
+            && controller.velocity.magnitude < 6.1f
+            )
         {
             WeaponStruct.siradakiAtisZamani = Time.time + (1f / silahOzellikleriOS.atesHizi);
             AtesEt();
@@ -179,9 +183,9 @@ public abstract class SilahTaban : MonoBehaviourPun
     
     protected virtual void AtesEt()
     {
-        
+        _shellEjector.EjectShell();
         callRecoil();
-        
+        //photonOyucuSesYonetim.playSmoke(silahOzellikleriOS.silahTur);
         WeaponStruct.mevcutMermi--;
         MermiUIGuncelle();
 
@@ -225,7 +229,7 @@ public abstract class SilahTaban : MonoBehaviourPun
                     {
                         if (kanSicramaEfekti) PhotonNetwork.Instantiate(kanSicramaEfekti.name, hit.point, rotasyon);
                         hitObject.TakeDamage(silahOzellikleriOS.vurusHasari);
-
+                        hitMarker.playWasShot(silahOzellikleriOS.vurusHasari);
                     }
                     //ai alanı bitisi
                     
@@ -234,7 +238,7 @@ public abstract class SilahTaban : MonoBehaviourPun
                     if (hitHealt != null && hitHealt.healt>0)
                     {
 
-                        bool buVurusOldururMu = (hitHealt.healt - silahOzellikleriOS.vurusHasari) <= 0;
+                        bool isLastShot = (hitHealt.healt - silahOzellikleriOS.vurusHasari) <= 0;
                         
                         int benimTakim = 0;
                         if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("Takim"))
@@ -258,13 +262,13 @@ public abstract class SilahTaban : MonoBehaviourPun
                         }
 
 
-                        if (buVurusOldururMu)
+                        if (isLastShot)
                         {
-                            VurulduScripti.animOldu(hitHasPw.Owner.NickName);
+                            hitMarker.playDeath(hitHasPw.Owner.NickName);
                         }
                         else
                         {
-                            VurulduScripti.Vurduk(silahOzellikleriOS.vurusHasari);
+                            hitMarker.playWasShot(silahOzellikleriOS.vurusHasari);
                         }
                         if (kanSicramaEfekti) PhotonNetwork.Instantiate(kanSicramaEfekti.name, hit.point, rotasyon);
                     }

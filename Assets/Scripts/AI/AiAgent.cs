@@ -69,7 +69,7 @@ public class AiAgent : MonoBehaviourPun
     void Update()
     {
         stateMachine.Update();
-        Debug.Log(stateMachine.currentState);
+        //Debug.Log(stateMachine.currentState);
     }
 
    

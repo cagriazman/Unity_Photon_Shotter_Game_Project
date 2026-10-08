@@ -614,7 +614,7 @@ BlendTree:
     m_Motion: {fileID: -203655887218126122, guid: 647decbbf4ea54848bfadbfbfae76bcf, type: 3}
     m_Threshold: 0.04214047
     m_Position: {x: 0, y: 1}
-    m_TimeScale: 1
+    m_TimeScale: 1.25
     m_CycleOffset: 0
     m_DirectBlendParameter: YatayYon
     m_Mirror: 0
