@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using Photon.Pun;
+using Unity.Mathematics;
+using UnityEngine.Serialization;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -21,17 +23,21 @@ namespace StarterAssets
         [Tooltip("Rotation speed of the character")]
         public float RotationSpeed = 1.0f;
         [Tooltip("Acceleration and deceleration")]
-        public float SpeedChangeRate = 10.0f;
-        public float SpeedChangeRateToZero = 20.0f;
+        public float SpeedChangeRate = 5.0f;
+        public float speedChangeRateToZero = 45.0f;
         [Tooltip("control runing")]
         public bool isCanRun;
         private float groundCheckTimer = 0f;
         private bool groundChecking = true;
-        [SerializeField] private float groundCheckTimerLimit = 0.02f;
-        [SerializeField] private float runUnlockLimit = 8.0f;
+        [SerializeField] private float groundCheckTimerLimit = 0.1f;
+        [SerializeField] private float runUnlockLimit = 3.35f;
         private Vector3 _currentMoveDirection = Vector3.forward;
         private Vector3 _lastMoveDir = Vector3.forward;
-
+        [SerializeField]private float strafeLimit = 0.5f;
+        [SerializeField]private float rawStrafeLimit = 0.6f;
+        [SerializeField]private float dotLimit = 0.7f;
+        [SerializeField]private float strafeMultiplier = 0.7f;
+        
         [Header("Yön Değiştirme Yumuşatma")]
         [Tooltip("Karakterin yönünü ne kadar hızlı çevirebileceği (Radyan/sn). Değer düştükçe ani sapmalar engellenir.")]
         [SerializeField] private float directionChangeSpeed = 8.0f;
@@ -307,41 +313,36 @@ namespace StarterAssets
                 
                 float turnMultiplier = 1f;
                 float lookTurnRate = Mathf.Abs(_input.look.x);
-
+            
                 // Eğer fare eşikten daha hızlı savruluyorsa ceza hesapla
-                if (lookTurnRate > LookPenaltyThreshold )
-                {
-                    float excessLook = lookTurnRate - LookPenaltyThreshold;
-            
-                    // Dönüş şiddeti arttıkça çarpan 1.0'dan aşağıya doğru düşer
-                    turnMultiplier = 1.0f / (1.0f + excessLook * TurnPenaltySensitivity);
-            
-                    // Hızın belirlenen alt sınırın altına inmesini engelle
-                    turnMultiplier = Mathf.Max(turnMultiplier, MinTurnPenaltyMultiplier);
-
-                    
-                }
+                // if (lookTurnRate > LookPenaltyThreshold )
+                // {
+                //     float excessLook = lookTurnRate - LookPenaltyThreshold;
+                //
+                //     // Dönüş şiddeti arttıkça çarpan 1.0'dan aşağıya doğru düşer
+                //     turnMultiplier = 1.0f / (1.0f + excessLook * TurnPenaltySensitivity);
+                //
+                //     // Hızın belirlenen alt sınırın altına inmesini engelle
+                //     turnMultiplier = Mathf.Max(turnMultiplier, MinTurnPenaltyMultiplier);
+                //
+                //     
+                // }
                 
                 targetSpeed=SprintSpeed*turnMultiplier;
                 
             }
             
-            else if(_input.crouch)
+            else if (_input.crouch)
+            {
                 targetSpeed=CrouchSpeed;
-            
+            }
             else if (!isForward && _input.move != Vector2.zero)
             {
-                targetSpeed = MoveSpeed * 0.77f;
-                //SpeedChangeRate = 2f;
-                
+                targetSpeed = MoveSpeed * strafeMultiplier;
             }
-            
-            
-
             else
             {
                 targetSpeed = MoveSpeed;
-                //SpeedChangeRate = 10;
             }
             
             
@@ -358,7 +359,7 @@ namespace StarterAssets
             float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
             // accelerate or decelerate to target speed
-                _speed = Mathf.Lerp(_speed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
+            _speed = Mathf.Lerp(_speed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
             // if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
             // {
             //     // creates curved result rather than a linear one giving a more organic speed change
@@ -373,35 +374,32 @@ namespace StarterAssets
             // }
 
             // normalise input direction
-            Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
-
+            Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y);
+            Vector3 rawInputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y);
             // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is a move input rotate player when the player is moving
             if (_input.move != Vector2.zero)
             {
-                // move
-                inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
                 
-                if ( Vector3.Dot(_lastMoveDir, inputDirection) < 0.7f)
+                    float strafe = _input.move.x * rawStrafeLimit ;
+                    float forward = _input.move.y;
+                    if (isCanRun)
+                    {
+                        strafe = _input.move.x * strafeLimit; 
+                        targetSpeed= SprintSpeed * strafeLimit  ;
+                    }
+                    
+                    
+                    inputDirection = (transform.right * strafe + transform.forward * forward).normalized;
+                
+                
+                if ( Vector3.Dot(_lastMoveDir, rawInputDirection) < dotLimit)
                 {
-                    _lastMoveDir = inputDirection; 
-                    _speed = Mathf.Lerp(_speed, 0 , Time.deltaTime * SpeedChangeRateToZero);
+                    _lastMoveDir = rawInputDirection; 
+                    _speed = Mathf.Lerp(_speed, 0 , Time.deltaTime * speedChangeRateToZero);
                     
                 }
 
-                if (isCanRun)
-                {
-                    if (inputDirection.y > 0.01f)
-                    {
-                        Vector2 tmpDir = inputDirection;
-
-                        // Koşarken yatay hareket, ileri girişin belirli bir oranıyla sınırlı kalsın
-                        float maxSide = tmpDir.y * 0.1f; // 0.5 = yanal hareketin ileriye oranı, ayarlanabilir
-                        tmpDir.x = Mathf.Clamp(tmpDir.x, -maxSide, maxSide);
-
-                        inputDirection = tmpDir;
-                    }
-                }
 
             }
             
