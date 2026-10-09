@@ -22,6 +22,7 @@ namespace StarterAssets
         public float RotationSpeed = 1.0f;
         [Tooltip("Acceleration and deceleration")]
         public float SpeedChangeRate = 10.0f;
+        public float SpeedChangeRateToZero = 20.0f;
         [Tooltip("control runing")]
         public bool isCanRun;
         private float groundCheckTimer = 0f;
@@ -29,6 +30,7 @@ namespace StarterAssets
         [SerializeField] private float groundCheckTimerLimit = 0.02f;
         [SerializeField] private float runUnlockLimit = 8.0f;
         private Vector3 _currentMoveDirection = Vector3.forward;
+        private Vector3 _lastMoveDir = Vector3.forward;
 
         [Header("Yön Değiştirme Yumuşatma")]
         [Tooltip("Karakterin yönünü ne kadar hızlı çevirebileceği (Radyan/sn). Değer düştükçe ani sapmalar engellenir.")]
@@ -274,10 +276,9 @@ namespace StarterAssets
 
         private void Move()
         {                
-            bool runFlag = false;
 
             bool isForward = _input.move.y > 0.1f && Mathf.Abs(_input.move.x) < 0.1f;
-            
+            //take more time for groundcheck
             if (groundChecking != _controller.isGrounded)
             {
                 groundCheckTimer += Time.deltaTime;
@@ -290,7 +291,9 @@ namespace StarterAssets
             {
                 groundCheckTimer = 0f;
             }
-            isCanRun = _input.sprint && isForward  && !_input.getAim;
+            
+            
+            isCanRun = _input.sprint && _input.move.y > 0.1f && !_input.getAim;
             multiplierForAnim = isCanRun ? 2f : 1f;
             ak47anim.SetBool("isRunHeld", isCanRun);
 
@@ -306,7 +309,7 @@ namespace StarterAssets
                 float lookTurnRate = Mathf.Abs(_input.look.x);
 
                 // Eğer fare eşikten daha hızlı savruluyorsa ceza hesapla
-                if (lookTurnRate > LookPenaltyThreshold)
+                if (lookTurnRate > LookPenaltyThreshold )
                 {
                     float excessLook = lookTurnRate - LookPenaltyThreshold;
             
@@ -318,6 +321,7 @@ namespace StarterAssets
 
                     
                 }
+                
                 targetSpeed=SprintSpeed*turnMultiplier;
                 
             }
@@ -327,7 +331,7 @@ namespace StarterAssets
             
             else if (!isForward && _input.move != Vector2.zero)
             {
-                targetSpeed = MoveSpeed * 0.67f;
+                targetSpeed = MoveSpeed * 0.77f;
                 //SpeedChangeRate = 2f;
                 
             }
@@ -340,7 +344,7 @@ namespace StarterAssets
                 //SpeedChangeRate = 10;
             }
             
-
+            
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
@@ -350,23 +354,23 @@ namespace StarterAssets
             // a reference to the players current horizontal velocity
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
-            float speedOffset = 0.1f;
+            //float speedOffset = 0.1f;
             float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
             // accelerate or decelerate to target speed
-            if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
-            {
-                // creates curved result rather than a linear one giving a more organic speed change
-                // note T in Lerp is clamped, so we don't need to clamp our speed
-                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
-
-                // round speed to 3 decimal places
-                _speed = Mathf.Round(_speed * 1000f) / 1000f;
-            }
-            else
-            {
-                _speed = targetSpeed;
-            }
+                _speed = Mathf.Lerp(_speed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
+            // if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
+            // {
+            //     // creates curved result rather than a linear one giving a more organic speed change
+            //     // note T in Lerp is clamped, so we don't need to clamp our speed
+            //
+            //     // round speed to 3 decimal places
+            //     _speed = Mathf.Round(_speed * 1000f) / 1000f;
+            // }
+            // else
+            // {
+            //     _speed = targetSpeed;
+            // }
 
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
@@ -377,7 +381,31 @@ namespace StarterAssets
             {
                 // move
                 inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
+                
+                if ( Vector3.Dot(_lastMoveDir, inputDirection) < 0.7f)
+                {
+                    _lastMoveDir = inputDirection; 
+                    _speed = Mathf.Lerp(_speed, 0 , Time.deltaTime * SpeedChangeRateToZero);
+                    
+                }
+
+                if (isCanRun)
+                {
+                    if (inputDirection.y > 0.01f)
+                    {
+                        Vector2 tmpDir = inputDirection;
+
+                        // Koşarken yatay hareket, ileri girişin belirli bir oranıyla sınırlı kalsın
+                        float maxSide = tmpDir.y * 0.1f; // 0.5 = yanal hareketin ileriye oranı, ayarlanabilir
+                        tmpDir.x = Mathf.Clamp(tmpDir.x, -maxSide, maxSide);
+
+                        inputDirection = tmpDir;
+                    }
+                }
+
             }
+            
+        
 
             // move the player
             _controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) 
