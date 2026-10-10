@@ -17,52 +17,45 @@ namespace StarterAssets
     {
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
-        public float MoveSpeed = 4.0f;
+        public float MoveSpeed = 5.7f;
         [Tooltip("Sprint speed of the character in m/s")]
-        public float SprintSpeed = 6.0f;
+        public float SprintSpeed = 8.0f;
         [Tooltip("Rotation speed of the character")]
-        public float RotationSpeed = 1.0f;
+        public float RotationSpeed = .65f;
         [Tooltip("Acceleration and deceleration")]
         public float SpeedChangeRate = 5.0f;
         public float speedChangeRateToZero = 45.0f;
         [Tooltip("control runing")]
         public bool isCanRun;
-        private float groundCheckTimer = 0f;
-        private bool groundChecking = true;
-        [SerializeField] private float groundCheckTimerLimit = 0.1f;
-        [SerializeField] private float runUnlockLimit = 3.35f;
-        private Vector3 _currentMoveDirection = Vector3.forward;
+
+        [Header("Run control detial settings")]
         private Vector3 _lastMoveDir = Vector3.forward;
         [SerializeField]private float strafeLimit = 0.5f;
         [SerializeField]private float rawStrafeLimit = 0.6f;
         [SerializeField]private float dotLimit = 0.7f;
         [SerializeField]private float strafeMultiplier = 0.7f;
+        [SerializeField] private float motionProgress = 0; 
         
-        [Header("Yön Değiştirme Yumuşatma")]
-        [Tooltip("Karakterin yönünü ne kadar hızlı çevirebileceği (Radyan/sn). Değer düştükçe ani sapmalar engellenir.")]
-        [SerializeField] private float directionChangeSpeed = 8.0f;
         
-        //const turning made some speed increatment
+        
         [Header("Look / Turn Penalty (Dönüş Hız Cezası)")]
+        [SerializeField] private float directionChangeSpeed = 8.0f;
         [Tooltip("Mouse/Analog bu eşiğin üzerinde döndürülürse hız cezası devreye girer")]
         [SerializeField] private float LookPenaltyThreshold = 4.0f;
-
         [Tooltip("Dönüş anında koşu hızının düşebileceği taban çarpan (Örn: 0.5f -> hız en fazla yarıya iner)")]
         [Range(0.2f, 1.0f)]
         [SerializeField] private float MinTurnPenaltyMultiplier = 0.5f;
-
         [Tooltip("Dönüş şiddetinin hıza ne kadar sert etki edeceği")]
         [SerializeField] private float TurnPenaltySensitivity = 0.08f;
         [SerializeField] private float tmp ;
+        
 
-        
-        
+        [Header("Jump")]
         [Space(10)]
         [Tooltip("The height the player can jump")]
         public float JumpHeight = 1.2f;
         [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
         public float Gravity = -15.0f;
-
         [Space(10)]
         [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
         public float JumpTimeout = 0.1f;
@@ -78,6 +71,10 @@ namespace StarterAssets
         public float GroundedRadius = 0.5f;
         [Tooltip("What layers the character uses as ground")]
         public LayerMask GroundLayers;
+        [SerializeField] private float groundCheckTimerLimit = 0.08f;
+        private float groundCheckTimer = 0f;
+        private bool groundChecking = true;
+
         
         [Header("Crouch Settings")]
         [Tooltip("Eğilme anındaki yürüme hızı")]
@@ -92,8 +89,7 @@ namespace StarterAssets
         public float CrouchCameraY = 0.775f;
         [Tooltip("Eğilme ve kalkma geçiş hızı")]
         public float CrouchSpeedRate = 10f;
-
-
+        
 
         [Header("Cinemachine")]
         [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
@@ -288,7 +284,7 @@ namespace StarterAssets
             if (groundChecking != _controller.isGrounded)
             {
                 groundCheckTimer += Time.deltaTime;
-                if (groundCheckTimer > groundCheckTimerLimit)
+                if ((groundCheckTimer > groundCheckTimerLimit)|| _controller.isGrounded == true)
                 {
                     groundChecking = _controller.isGrounded;
                 }
@@ -299,17 +295,22 @@ namespace StarterAssets
             }
             
             
-            isCanRun = _input.sprint && _input.move.y > 0.1f && !_input.getAim;
+            isCanRun = _input.sprint && _input.move.y > 0.1f && groundChecking && !_input.getAim;
             multiplierForAnim = isCanRun ? 2f : 1f;
+            
             ak47anim.SetBool("isRunHeld", isCanRun);
-
+            
             float targetSpeed;
             
             // set target speed based on move speed, sprint speed and if sprint is pressed
             //targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
             
-            if (isCanRun && ak47anim.GetBool("isRunHeld")&& _input.move != Vector2.zero)
-            {
+            if (isCanRun && _input.move != Vector2.zero)
+            {            
+
+                motionProgress = Mathf.Clamp01(_speed / SprintSpeed);
+
+                ak47anim.SetFloat("sprintValue", Mathf.Max(0.1f, motionProgress));
                 
                 float turnMultiplier = 1f;
                 float lookTurnRate = Mathf.Abs(_input.look.x);
@@ -343,6 +344,7 @@ namespace StarterAssets
             else
             {
                 targetSpeed = MoveSpeed;
+                ak47anim.SetFloat("sprintValue", 0);
             }
             
             
@@ -412,10 +414,7 @@ namespace StarterAssets
             Debug.Log("Target speed: "+_speed);
         }
 
-        private bool isRunFlagUp(float currentSpeed)
-        {
-            return (currentSpeed > runUnlockLimit);
-        }
+        
 
         private void JumpAndGravity()
         {
