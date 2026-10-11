@@ -4027,6 +4027,7 @@ MonoBehaviour:
   _input: {fileID: 0}
   recoilTimer: 0
   sensitivityForRecoil: 0.1
+  recoilClamp: 20
 --- !u!114 &5762346481260540968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5425,6 +5426,9 @@ MonoBehaviour:
   sprintFOV: 60
   fovTransitionSpeed: 5
   maxSpeedLimit: 7
+  maxLeanAngle: 2
+  maxSideShift: 0.15
+  tiltTransitionSpeed: 4
 --- !u!1 &1451761728142161411
 GameObject:
   m_ObjectHideFlags: 0
@@ -9282,6 +9286,7 @@ MonoBehaviour:
   _input: {fileID: 0}
   recoilTimer: 0
   sensitivityForRecoil: 2.5
+  recoilClamp: 10
 --- !u!114 &157663067435589988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17294,6 +17299,7 @@ MonoBehaviour:
   _input: {fileID: 0}
   recoilTimer: 0
   sensitivityForRecoil: 0.1
+  recoilClamp: 20
   vCam: {fileID: 57611619750613429}
   scopeOverlay: {fileID: 6369725474605885728}
   scopeFOV: 15
@@ -23600,6 +23606,7 @@ MonoBehaviour:
   _input: {fileID: 0}
   recoilTimer: 0
   sensitivityForRecoil: 0.1
+  recoilClamp: 20
 --- !u!114 &6583873999772035416
 MonoBehaviour:
   m_ObjectHideFlags: 0

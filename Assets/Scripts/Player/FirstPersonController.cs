@@ -294,9 +294,9 @@ namespace StarterAssets
             }
             
             
-            isCanRun = _input.sprint && _input.move.y > 0.1f && groundChecking && !_input.getAim;
             multiplierForAnim = isCanRun ? 2f : 1f;
             
+            isCanRun = _input.sprint && _input.move.y > 0.1f && groundChecking && !ak47anim.GetBool("ADS");
             ak47anim.SetBool("isRunHeld", isCanRun);
             
             float targetSpeed;

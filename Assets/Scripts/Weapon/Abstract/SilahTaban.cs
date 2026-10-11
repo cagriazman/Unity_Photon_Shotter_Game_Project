@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using System.Collections;
 using StarterAssets;
+using Unity.Mathematics;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
@@ -57,6 +58,7 @@ public abstract class SilahTaban : MonoBehaviourPun
     
     [SerializeField] private float recoilTimer=1;
     [SerializeField] private float sensitivityForRecoil = 2.5f;
+    [SerializeField] private float recoilClamp = 20f;
 
     protected virtual void Start()
     {
@@ -90,7 +92,9 @@ public abstract class SilahTaban : MonoBehaviourPun
         if (controller.velocity.magnitude > 0.01f)
         {
             recoilTimer += Time.deltaTime*sensitivityForRecoil;
+            recoilTimer = Mathf.Clamp(recoilTimer,0,recoilClamp);
             silahOzellikleriOS.mevcutSacilma = silahOzellikleriOS.sacilma * recoilTimer;
+            Debug.Log("recoil timer:{recoilTimer}........"+recoilTimer);
         }
         else
         {
