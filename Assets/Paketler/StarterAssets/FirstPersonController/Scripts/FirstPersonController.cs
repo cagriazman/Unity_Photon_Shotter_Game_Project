@@ -28,8 +28,9 @@ namespace StarterAssets
         [Tooltip("control runing")]
         public bool isCanRun;
 
+        
         [Header("Run control detial settings")]
-        private Vector3 _lastMoveDir = Vector3.forward;
+        [SerializeField]private Vector3 _lastMoveDir = Vector3.forward;
         [SerializeField]private float strafeLimit = 0.5f;
         [SerializeField]private float rawStrafeLimit = 0.6f;
         [SerializeField]private float dotLimit = 0.7f;
@@ -38,7 +39,7 @@ namespace StarterAssets
         
         
         
-        [Header("Look / Turn Penalty (Dönüş Hız Cezası)")]
+        [Header("Look / Turn Penalty ")]
         [SerializeField] private float directionChangeSpeed = 8.0f;
         [Tooltip("Mouse/Analog bu eşiğin üzerinde döndürülürse hız cezası devreye girer")]
         [SerializeField] private float LookPenaltyThreshold = 4.0f;
@@ -51,12 +52,10 @@ namespace StarterAssets
         
 
         [Header("Jump")]
-        [Space(10)]
         [Tooltip("The height the player can jump")]
         public float JumpHeight = 1.2f;
         [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
         public float Gravity = -15.0f;
-        [Space(10)]
         [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
         public float JumpTimeout = 0.1f;
         [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]

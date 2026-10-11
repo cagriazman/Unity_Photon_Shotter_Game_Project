@@ -5108,12 +5108,12 @@ MonoBehaviour:
   SpeedChangeRate: 5
   speedChangeRateToZero: 50
   isCanRun: 0
-  groundCheckTimerLimit: 0.1
-  runUnlockLimit: 3.35
+  _lastMoveDir: {x: 0, y: 0, z: 1}
   strafeLimit: 0.45
   rawStrafeLimit: 0.65
   dotLimit: 0.7
   strafeMultiplier: 0.7
+  motionProgress: 0
   directionChangeSpeed: 8
   LookPenaltyThreshold: 0.1
   MinTurnPenaltyMultiplier: 0.5
@@ -5129,6 +5129,7 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 128
+  groundCheckTimerLimit: 0.1
   CrouchSpeed: 2
   NormalHeight: 1.7
   CrouchHeight: 0.85
