@@ -94,7 +94,6 @@ public abstract class SilahTaban : MonoBehaviourPun
             recoilTimer += Time.deltaTime*sensitivityForRecoil;
             recoilTimer = Mathf.Clamp(recoilTimer,0,recoilClamp);
             silahOzellikleriOS.mevcutSacilma = silahOzellikleriOS.sacilma * recoilTimer;
-            Debug.Log("recoil timer:{recoilTimer}........"+recoilTimer);
         }
         else
         {
