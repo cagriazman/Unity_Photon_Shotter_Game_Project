@@ -13470,8 +13470,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   swayClamp: 0.04
-  swaySmooth: 2
-  returnSmooth: 5
+  swaySmooth: 3
+  returnSmooth: 7
   isAiming: 0
 --- !u!114 &4277655155683352346
 MonoBehaviour:
@@ -20722,9 +20722,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b806e0dfe4266e4e9308cc96ee38333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  walkingSpeed: 14
-  bobAmountY: 0.04
-  bobAmountX: 0.027
+  walkingSpeed: 15
+  bobAmountY: 0.05
+  bobAmountX: 0.04
   sprintMultiplier: 1.6
   jumpBobAmount: 0.08
   landBobMultiplier: 0.015
