@@ -165,7 +165,7 @@ public class OyuncuIcın : MonoBehaviourPunCallbacks
             if (changedProps.ContainsKey("Takim"))
             {
                 int yeniTakim = (int)changedProps["Takim"];
-                Debug.Log($"{targetPlayer.NickName} takımı güncellendi: {yeniTakim}");
+                //Debug.Log($"{targetPlayer.NickName} takımı güncellendi: {yeniTakim}");
                 GorseliUygula(yeniTakim);
                 teamNumber = yeniTakim;
                 

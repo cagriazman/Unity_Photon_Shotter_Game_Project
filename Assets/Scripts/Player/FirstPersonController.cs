@@ -354,13 +354,13 @@ namespace StarterAssets
             if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
             // a reference to the players current horizontal velocity
-            float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+            //float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
             //float speedOffset = 0.1f;
-            float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+            //float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
             // accelerate or decelerate to target speed
-            _speed = Mathf.Lerp(_speed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
+            _speed = Mathf.Lerp(_speed, targetSpeed , Time.deltaTime * SpeedChangeRate);
             // if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
             // {
             //     // creates curved result rather than a linear one giving a more organic speed change
@@ -376,9 +376,8 @@ namespace StarterAssets
 
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y);
-            Vector3 rawInputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y);
-            // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-            // if there is a move input rotate player when the player is moving
+            Vector3 rawInputDirection = inputDirection;
+            
             if (_input.move != Vector2.zero)
             {
                 
@@ -410,7 +409,7 @@ namespace StarterAssets
             _controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) 
                              + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
             
-            Debug.Log("Target speed: "+_speed);
+            //Debug.Log("Target speed: "+_speed);
         }
 
         

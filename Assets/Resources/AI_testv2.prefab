@@ -8929,6 +8929,7 @@ MonoBehaviour:
   _input: {fileID: 0}
   recoilTimer: 1
   sensitivityForRecoil: 0
+  recoilClamp: 20
 --- !u!1 &5884068738029444160
 GameObject:
   m_ObjectHideFlags: 0

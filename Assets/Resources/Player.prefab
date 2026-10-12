@@ -5106,7 +5106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StarterAssets.PlayerMovement
   MoveSpeed: 5.7
   SprintSpeed: 8
-  RotationSpeed: 0.65
+  RotationSpeed: 1
   SpeedChangeRate: 5
   speedChangeRateToZero: 50
   isCanRun: 0
@@ -5426,9 +5426,14 @@ MonoBehaviour:
   sprintFOV: 60
   fovTransitionSpeed: 5
   maxSpeedLimit: 7
-  maxLeanAngle: 2
-  maxSideShift: 0.15
+  speedRatioLimit: 6.5
+  maxLeanAngle: 1
   tiltTransitionSpeed: 4
+  currentFOV: 0
+  currentRoll: 0
+  maxMouseLeanAngle: 1
+  totalMaxRoll: 4
+  leanSmoothSpeed: 10
 --- !u!1 &1451761728142161411
 GameObject:
   m_ObjectHideFlags: 0
@@ -16283,7 +16288,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7640058773146329653}
   - component: {fileID: 475327632702580564}
-  - component: {fileID: 8257950383418157983}
+  - component: {fileID: 3054974678263214553}
+  - component: {fileID: 2443991114122757798}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -16318,7 +16324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8257950383418157983
+--- !u!114 &3054974678263214553
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16327,21 +16333,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 5012202228828883818}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd6043bde05a7fc4cba197d06915c1e3, type: 3}
+  m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  Damping: {x: 0, y: 0, z: 0}
-  ShoulderOffset: {x: 0, y: 0, z: 0}
-  VerticalArmLength: 0
-  CameraSide: 0.6
-  CameraDistance: 0
-  CameraCollisionFilter:
-    serializedVersion: 2
-    m_Bits: 1
-  IgnoreTag: Player
-  CameraRadius: 0.15
-  DampingIntoCollision: 0
-  DampingFromCollision: 0
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineTransposer
+  m_BindingMode: 1
+  m_FollowOffset: {x: 0, y: 0, z: 0}
+  m_XDamping: 0
+  m_YDamping: 0
+  m_ZDamping: 0
+  m_AngularDampingMode: 0
+  m_PitchDamping: 0
+  m_YawDamping: 0
+  m_RollDamping: 0
+  m_AngularDamping: 0
+--- !u!114 &2443991114122757798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5012202228828883818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4afa82ae3200b82408d605c3dbdd1e38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineRotateWithFollowTarget
+  Damping: 0
 --- !u!1 &5012841995803265823
 GameObject:
   m_ObjectHideFlags: 0
